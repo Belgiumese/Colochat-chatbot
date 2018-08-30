@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <message-box :messages="messages"/>
     <input 
       type="text" 
       v-model="inputText"
@@ -7,26 +8,30 @@
     <button 
       @click="submit" 
     >Submit</button>
-    <h2>{{ responseText }}</h2>
   </div>
 </template>
 
 <script>
 import Api from '../services/Api.js';
+import MessageBox from './MessageBox';
 
 export default {
   name: 'HelloWorld',
 
+  components: {
+    'message-box': MessageBox
+  },
+
   data() {
     return {
       inputText: '',
-      responseText: ''
+      messages: []
     };
   },
 
   methods: {
     submit() {
-      Api.getResponse(this.inputText).then(res => this.responseText = res);
+      Api.getResponse(this.inputText).then(res => this.messages.push(res));
     }
   }
 };
