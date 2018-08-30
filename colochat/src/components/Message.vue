@@ -1,7 +1,7 @@
 <template>
   <div 
     class="message" 
-    :class="{ left: isBot }">
+    :class="{ botText: isBot }">
     <div class="messageContainer">
       <p 
         class="messageText" 
@@ -35,20 +35,28 @@ export default {
   .message {
     text-align: right;
 
-    &.left {
+    &.botText {
       text-align: left;
+
+      .messageContainer {
+        background-color: rgb(105, 37, 231);
+      }
     }
 
     .messageContainer {
       display: inline-block;
-      border-radius: 10px;
-      padding: 5px;
-      max-width: 60%;
-      margin: 20px;
-
+      border-radius: 20px;
+      padding: 8px 12px;
+      max-width: 46%;
+      margin: 7px 0;
+      background-color: rgb(136, 129, 145);
+      font-size: 16px;
+      font-family: 'Open Sans', sans-serif;
 
       .messageText {
-        display: inline-block;
+        color: white;
+        text-align: left;
+        //display: inline-block;
       }
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <message-box :messages="messages"/>
+    <message-box :messages="messages" />
     <input 
       type="text" 
       v-model="inputText"
@@ -34,10 +34,12 @@ export default {
 
   methods: {
     submit() {
+      const text = this.inputText;
+      this.inputText = '';
       // Add human message
-      this.addHumanMessage(this.inputText);
+      this.addHumanMessage(text);
       // Submit for response, then add it
-      Api.getResponse(this.inputText).then(res => this.messages.push(res));
+      Api.getResponse(text).then(res => this.messages.push(res));
     },
 
     addHumanMessage(text) {

@@ -22,6 +22,12 @@ export default {
       default: () => [],
       type: Array
     }
+  },
+
+  data() {
+    return {
+      ps: null
+    };
   }
 };
 </script>
@@ -29,9 +35,12 @@ export default {
 
 <style lang="scss" scoped>
 .messageBox {
-  width: 500px;
+  width: 600px;
   height: 600px;
   background-color: rgb(236, 243, 250);
   margin: 20px auto;
+  padding: 15px;
+  position: relative;
+  overflow: auto;
 }
 </style>
