@@ -21,7 +21,7 @@ import MessageData from '../services/MessageData.js';
 import MessageBox from './MessageBox';
 
 export default {
-  name: 'HelloWorld',
+  name: 'ChatBot',
 
   components: {
     'message-box': MessageBox
