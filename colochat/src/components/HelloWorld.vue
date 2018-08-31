@@ -1,12 +1,15 @@
 <template>
   <div class="hello">
-    <message-box :messages="messages" />
+    <message-box 
+      :messages="messages" 
+      ref="messageBox"/>
     <input 
       type="text" 
       v-model="inputText"
       @keyup.enter="submit">
     <button 
-      @click="submit" 
+      @click="submit"
+      :disabled="!isInputValid" 
     >Submit</button>
   </div>
 </template>
@@ -32,14 +35,22 @@ export default {
     };
   },
 
+  computed: {
+    isInputValid() {
+      return this.inputText !== '';
+    },
+  },
+
   methods: {
     submit() {
-      const text = this.inputText;
-      this.inputText = '';
-      // Add human message
-      this.addHumanMessage(text);
-      // Submit for response, then add it
-      Api.getResponse(text).then(res => this.messages.push(res));
+      if (this.isInputValid) {
+        const text = this.inputText;
+        this.inputText = '';
+        // Add human message
+        this.addHumanMessage(text);
+        // Submit for response, then add it
+        Api.getResponse(text).then(this.addAgentMessage);
+      }
     },
 
     addHumanMessage(text) {
@@ -48,7 +59,19 @@ export default {
         text: text, 
         id: this.idCounter++
       });
+
+      this.addMessage(messageData);
+    },
+
+    addAgentMessage(agentResponse) {
+      this.addMessage(agentResponse);
+    },
+
+    addMessage(messageData) {
+      // Add message to the screen
       this.messages.push(messageData);
+      // Update the scroll position
+      this.$refs.messageBox.scrollToBottom();
     }
   }
 };
