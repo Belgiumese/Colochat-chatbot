@@ -1,4 +1,6 @@
 import firebase from 'firebase/app';
+import SOURCE from './Sources';
+import MessageData from './MessageData';
 require('firebase/functions');
 
 // Firebase connection settings
@@ -16,9 +18,21 @@ firebase.initializeApp(config);
 // make an intent request to dialogflow
 const dialogFlowRequest = firebase.functions().httpsCallable('dialogFlowRequest');
 
+function formatMessageData(messageData) {
+  return MessageData({
+    id: messageData.responseId,
+    action: messageData.queryResult.action,
+    text: messageData.queryResult.fulfillmentText,
+    source: SOURCE.SOURCE_AGENT
+  });
+}
+
 export default {
   getResponse(text) {
     return dialogFlowRequest({ text: text })
-      .then(res => res.data.queryResult.fulfillmentText);
+      .then(res => {
+        console.log(res.data);
+        return formatMessageData(res.data);
+      });
   }
 };
