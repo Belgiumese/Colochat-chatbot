@@ -73,6 +73,11 @@ export default {
       // Update the scroll position
       this.$refs.messageBox.scrollToBottom();
     }
+  },
+
+  created() {
+    // Get Colo to start the conversation by sending a hidden message
+    Api.getResponse('who are you').then(this.addAgentMessage);
   }
 };
 

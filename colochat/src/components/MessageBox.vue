@@ -35,14 +35,12 @@ export default {
 
       Vue.nextTick(() => {
         const newScroll = mBox.scrollHeight - mBox.clientHeight;
-        console.log(newScroll);
-        console.log(mBox.scrollTop);
+
         if (newScroll > mBox.scrollTop) {
           this.$(mBox).animate({
             scrollTop: newScroll
           }, 100);
         }
-        //mBox.scrollTop = mBox.scrollHeight;
       });
     }
   }
