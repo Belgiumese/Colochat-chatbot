@@ -1,0 +1,39 @@
+{
+  "name": "colochat",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "start": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "firebase": "^5.4.1",
+    "jquery": "^3.3.1",
+    "velocity-animate": "^2.0.5",
+    "vue": "^2.5.17"
+  },
+  "devDependencies": {
+    "api-ai-javascript": "^2.0.0-beta.14",
+    "dialogflow": "^0.6.0",
+    "@vue/cli-plugin-babel": "^3.0.0",
+    "@vue/cli-plugin-eslint": "^3.0.0",
+    "@vue/cli-service": "^3.0.0",
+    "eslint": "^5.4.0",
+    "eslint-plugin-vue": "^4.7.1",
+    "node-sass": "^4.9.3",
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
