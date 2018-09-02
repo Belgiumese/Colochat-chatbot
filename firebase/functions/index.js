@@ -19,27 +19,32 @@ process.env.DEBUG = 'dialogflow:debug';
 
 // This handles all the dialogflow response stuff
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
+  if (!request.body.queryResult.intent) {
+    request.body.queryResult.intent = { displayName: 'none', isFallback: true};
+  }
+  const fulfillmentText = request.body.queryResult.fulfillmentText;
+  console.log(`RESULT: ${JSON.stringify(request.body.queryResult)}`);
+
   const agent = new WebhookClient({ request, response });
-  console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
-  console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
 
-  // function welcome(agent) {
-  //   agent.add(`Welcome to my agent!`);
-  //   return axios.get('https://yesno.wtf/api/')
-  //     .then(res => {
-  //       agent.add(res.data.answer);
-  //       return agent;
-  //     })
-  //     .catch(err => {
-  //       agent.add(`Err: ${err}`);
-  //       return agent;
-  //     });
-  // }
+  function welcome(agent) {
+    agent.add(`Welcome to my agent!`);
+    // return axios.get('https://yesno.wtf/api/')
+    //   .then(res => {
+    //     agent.add(res.data.answer);
+    //     return agent;
+    //   })
+    //   .catch(err => {
+    //     agent.add(`Err: ${err}`);
+    //     return agent;
+    //   });
+  }
 
-  // function fallback(agent) {
-  //   agent.add(`I didn't understand`);
-  //   agent.add(`I'm sorry, can you try again?`);
-  // }
+  function fallback(agent) {
+    console.log('running fallback');
+    agent.add(`I didn't understand`);
+    agent.add(`I'm sorry, can you try again?`);
+  }
 
   // // Uncomment and edit to make your own intent handler
   // // uncomment `intentMap.set('your intent name here', yourFunctionHandler);`
@@ -68,11 +73,15 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   //   agent.add(conv); // Add Actions on Google library responses to your agent's response
   // }
 
-  // let intentMap = new Map();
-  // intentMap.set('Default Welcome Intent', welcome);
-  // intentMap.set('Default Fallback Intent', fallback);
+  let intentMap = new Map();
+  intentMap.set('Default Welcome Intent', welcome);
+  intentMap.set('Default Fallback Intent', fallback);
+  intentMap.set('none', (agent) => {
+    agent.add(fulfillmentText);
+    console.log('running null');
+  });
 
-  // agent.handleRequest(intentMap);
+  agent.handleRequest(intentMap);
 });
 
 // This is user request stuff
@@ -87,5 +96,7 @@ exports.dialogFlowRequest = functions.https.onCall((data, context) => {
       },
     },
     // Send back the actual data, cutting out useless information
-  }).then(agentResponse => agentResponse[0]);
+  }).then(agentResponse => {
+    return agentResponse[0];
+  });
 });

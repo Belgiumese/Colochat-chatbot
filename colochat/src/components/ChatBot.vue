@@ -63,8 +63,10 @@ export default {
       this.addMessage(messageData);
     },
 
-    addAgentMessage(agentResponse) {
-      this.addMessage(agentResponse);
+    addAgentMessage(agentResponses) {
+      for (let i = 0; i < agentResponses.length; i++) {
+        this.addMessage(agentResponses[i]);
+      }
     },
 
     addMessage(messageData) {
