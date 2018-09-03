@@ -4,22 +4,23 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "vue-cli-service serve"
   },
   "dependencies": {
     "firebase": "^5.4.1",
     "jquery": "^3.3.1",
-    "velocity-animate": "^2.0.5",
-    "vue": "^2.5.17"
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
-    "api-ai-javascript": "^2.0.0-beta.14",
-    "dialogflow": "^0.6.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@vue/cli-plugin-babel": "^3.0.0",
     "@vue/cli-plugin-eslint": "^3.0.0",
     "@vue/cli-service": "^3.0.0",
+    "api-ai-javascript": "^2.0.0-beta.14",
+    "dialogflow": "^0.6.0",
     "eslint": "^5.4.0",
     "eslint-plugin-vue": "^4.7.1",
     "node-sass": "^4.9.3",

@@ -13,8 +13,6 @@
 
 <script>
 import Vue from 'vue';
-import $ from 'jquery';
-
 import Message from './Message';
 
 export default {
@@ -37,22 +35,14 @@ export default {
 
       Vue.nextTick(() => {
         const newScroll = mBox.scrollHeight - mBox.clientHeight;
-        console.log(newScroll);
-        console.log(mBox.scrollTop);
+
         if (newScroll > mBox.scrollTop) {
-          $(mBox).animate({
+          this.$(mBox).animate({
             scrollTop: newScroll
           }, 100);
         }
-        //mBox.scrollTop = mBox.scrollHeight;
       });
     }
-  },
-
-  data() {
-    return {
-      ps: null
-    };
   }
 };
 </script>

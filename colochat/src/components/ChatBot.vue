@@ -21,7 +21,7 @@ import MessageData from '../services/MessageData.js';
 import MessageBox from './MessageBox';
 
 export default {
-  name: 'HelloWorld',
+  name: 'ChatBot',
 
   components: {
     'message-box': MessageBox
@@ -63,8 +63,10 @@ export default {
       this.addMessage(messageData);
     },
 
-    addAgentMessage(agentResponse) {
-      this.addMessage(agentResponse);
+    addAgentMessage(agentResponses) {
+      for (let i = 0; i < agentResponses.length; i++) {
+        this.addMessage(agentResponses[i]);
+      }
     },
 
     addMessage(messageData) {
@@ -73,6 +75,11 @@ export default {
       // Update the scroll position
       this.$refs.messageBox.scrollToBottom();
     }
+  },
+
+  created() {
+    // Get Colo to start the conversation by sending a hidden message
+    Api.getResponse('who are you').then(this.addAgentMessage);
   }
 };
 

@@ -1,21 +1,24 @@
 <template>
   <div id="app">
-    <HelloWorld/>
+    <!-- 
+      This is the nav bar with links to conponents. These pages are specified
+      in the router.js file. -->
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/faq">FAQ</router-link> |
+      <router-link to="/info">Further info</router-link>
+    </div>
+
+    <!-- The router view shows the entire page you're currently on -->
+    <keep-alive>
+      <router-view/>
+    </keep-alive>
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue';
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-};
-</script>
-
 <style>
+/* Any styles here are applied globally to all components. It's unlikely
+  that you need to put anything in here.*/
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 * {
@@ -25,11 +28,11 @@ export default {
 }
 
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 10px;
 }
 </style>
