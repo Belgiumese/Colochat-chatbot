@@ -17,35 +17,27 @@ const sessionPath = sessionClient.sessionPath(agentSettings.projectId, agentSett
 
 process.env.DEBUG = 'dialogflow:debug';
 
-// This handles all the dialogflow response stuff
+// Given a language and a word to translate, get the translation and return it
+function getTranslation(language, word) {
+  //TODO: make a request to SQL services for a response.
+  // eslint-disable-next-line prefer-promise-reject-errors
+  return Promise.reject(`Sorry, I haven't learned how to do this yet. Check back soon, I might know how to
+      to translate ${word} into ${language}!`);
+}
+
+// This webhook is called by dialogflow on a fulfillment request. Adds the correct response
+// And returns.
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
+  // Fix for dialogflow smalltalk, which does not have an intent property and crashes the
+  // dialogflow-fulfillment handleRequest function. Pretend to be an intent called 'none'.
   if (!request.body.queryResult.intent) {
     request.body.queryResult.intent = { displayName: 'none', isFallback: true};
   }
+
   const fulfillmentText = request.body.queryResult.fulfillmentText;
   console.log(`RESULT: ${JSON.stringify(request.body.queryResult)}`);
 
   const agent = new WebhookClient({ request, response });
-
-  function welcome(agent) {
-    agent.add(`Welcome to my agent!`);
-    // return axios.get('https://yesno.wtf/api/')
-    //   .then(res => {
-    //     agent.add(res.data.answer);
-    //     return agent;
-    //   })
-    //   .catch(err => {
-    //     agent.add(`Err: ${err}`);
-    //     return agent;
-    //   });
-  }
-
-  function fallback(agent) {
-    console.log('running fallback');
-    agent.add(`I didn't understand`);
-    agent.add(`I'm sorry, can you try again?`);
-  }
-
   // // Uncomment and edit to make your own intent handler
   // // uncomment `intentMap.set('your intent name here', yourFunctionHandler);`
   // // below to get this function to be run when a Dialogflow intent is matched
@@ -62,29 +54,36 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   //   agent.add(new Suggestion(`Quick Reply`));
   //   agent.add(new Suggestion(`Suggestion`));
   //   agent.setContext({ name: 'weather', lifespan: 2, parameters: { city: 'Rome' }});
-  // }
-
-  // // Uncomment and edit to make your own Google Assistant intent handler
-  // // uncomment `intentMap.set('your intent name here', googleAssistantHandler);`
-  // // below to get this function to be run when a Dialogflow intent is matched
-  // function googleAssistantHandler(agent) {
-  //   let conv = agent.conv(); // Get Actions on Google library conv instance
-  //   conv.ask('Hello from the Actions on Google client library!') // Use Actions on Google library
-  //   agent.add(conv); // Add Actions on Google library responses to your agent's response
-  // }
 
   let intentMap = new Map();
-  intentMap.set('Default Welcome Intent', welcome);
-  intentMap.set('Default Fallback Intent', fallback);
-  intentMap.set('none', (agent) => {
+
+  // If triggering the 'none' intent set before, just respond with the fulfillment text.
+  intentMap.set('none', agent => {
     agent.add(fulfillmentText);
-    console.log('running null');
+  });
+
+  // This is triggered when someone asks for a translation. Get the response from SQL, and
+  // Return it.
+  intentMap.set('translation', agent => {
+    agent.add('Let me check that for you...');
+    const language = agent.parameters.aboriginal_language;
+    const word = agent.parameters.Word;
+
+    return getTranslation(language, word).then((translation) => {
+      agent.add(`The word for ${word} in ${language} is ${translation}!`);
+      return agent;
+    }).catch((err) => {
+      agent.add(err);
+      return agent;
+    })
+
   });
 
   agent.handleRequest(intentMap);
 });
 
-// This is user request stuff
+// This function is triggered by the front-end to make a dialogflow request.
+// It simply makes a request, then returns the result.
 exports.dialogFlowRequest = functions.https.onCall((data, context) => {
   // Make a request to dialogflow based on the text given to the request
   return sessionClient.detectIntent({
