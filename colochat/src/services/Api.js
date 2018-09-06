@@ -25,7 +25,7 @@ function formatMessageData(messageData) {
 
   for (let i = 0; i < messages.length; i++) {
     messageDataSet.push(MessageData({
-      id: messageData.responseId,
+      id: messageData.responseId + i,
       action: messageData.queryResult.action,
       text: messages[i],
       source: SOURCE.SOURCE_AGENT
