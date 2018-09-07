@@ -12,6 +12,8 @@ const agentSettings = {
   languageCode: 'en-AU'
 };
 
+let idCounter = 0;
+
 const slqLanguageSources = {
   Barunggam: 'ec6accc5-07d9-44d3-bf6d-0b363a73f3ef',
   Butchulla: '35350512-a668-4bde-a58c-46092a07d1de',
@@ -34,7 +36,7 @@ const slqLanguageSources = {
 }
 
 const sessionClient = new dialogflow.SessionsClient();
-const sessionPath = sessionClient.sessionPath(agentSettings.projectId, agentSettings.sessionId);
+//const sessionPath = sessionClient.sessionPath(agentSettings.projectId, agentSettings.sessionId);
 
 process.env.DEBUG = 'dialogflow:debug';
 
@@ -50,7 +52,7 @@ function getTranslation(language, word) {
 
   const query = encodeURI(`SELECT * FROM "${languageId}" WHERE LOWER("English") LIKE LOWER('${word}')`);
   const url = `https://data.gov.au/api/3/action/datastore_search_sql?sql=${query}`;
-  console.log(url);
+  console.log(`QUERY URL: ${url}`);
 
   return axios.get(url)
     .then(res => {
@@ -66,7 +68,7 @@ function getTranslation(language, word) {
         return results[0][language];
       }
     }, err => {
-      console.log(err);
+      console.log(`COLO ERR: ${err}`);
       return Promise.reject('Something went wrong and I got confused, please try asking again!');
     });
 }
@@ -142,9 +144,23 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 // This function is triggered by the front-end to make a dialogflow request.
 // It simply makes a request, then returns the result.
 exports.dialogFlowRequest = functions.https.onCall((data, context) => {
+  //context.rawRequest = null;
+  //console.log(`CONTEXT: ${JSON.stringify(context)}`);
+  // console.log(`CONTEXT: ${JSON.stringify(context, (key, value) => {
+  //   if (key !== 'rawRequest') {
+  //     return value;
+  //   }
+  // })}`);
+  // cache = null; // Enable garbage collection
+  //const res = { sessionPath: null, message: null };
+  if (!data.sessionPath) {
+    data.sessionPath = sessionClient.sessionPath(agentSettings.projectId, idCounter.toString());
+    idCounter++;
+  }
+  console.log(`SESSION PATH: ${data.sessionPath}`);
   // Make a request to dialogflow based on the text given to the request
   return sessionClient.detectIntent({
-    session: sessionPath,
+    session: data.sessionPath,
     queryInput: {
       text: {
         text: data.text,
@@ -153,6 +169,7 @@ exports.dialogFlowRequest = functions.https.onCall((data, context) => {
     },
     // Send back the actual data, cutting out useless information
   }).then(agentResponse => {
-    return agentResponse[0];
+    //res.message = agentResponse[0];
+    return { message: agentResponse[0], sessionPath: data.sessionPath };
   });
 });

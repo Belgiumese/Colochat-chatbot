@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Api from '../services/Api.js';
+import DialogApi from '../services/DialogApi.js';
 import SOURCE from '../services/Sources.js';
 import MessageData from '../services/MessageData.js';
 import MessageBox from './MessageBox';
@@ -49,7 +49,7 @@ export default {
         // Add human message
         this.addHumanMessage(text);
         // Submit for response, then add it
-        Api.getResponse(text).then(this.addAgentMessage);
+        DialogApi.getResponse(text).then(this.addAgentMessage);
       }
     },
 
@@ -79,7 +79,7 @@ export default {
 
   created() {
     // Get Colo to start the conversation by sending a hidden message
-    Api.getResponse('who are you').then(this.addAgentMessage);
+    DialogApi.getResponse('who are you').then(this.addAgentMessage);
   }
 };
 
