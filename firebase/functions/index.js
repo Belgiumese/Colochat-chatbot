@@ -6,13 +6,13 @@ const { WebhookClient } = require('dialogflow-fulfillment');
 const { Card, Suggestion } = require('dialogflow-fulfillment');
 const axios = require('axios');
 
+const ID_SIZE = 10;
+
 const agentSettings = {
   projectId: 'newagent-9dde0',
   sessionId: 'test-session',
   languageCode: 'en-AU'
 };
-
-let idCounter = 0;
 
 const slqLanguageSources = {
   Barunggam: 'ec6accc5-07d9-44d3-bf6d-0b363a73f3ef',
@@ -83,6 +83,10 @@ function capitaliseText(inputString) {
   return inputString.charAt(0).toUpperCase() + inputString.slice(1);
 }
 
+function uniqueId() {
+  return Math.random().toString(36).substr(2, ID_SIZE);
+}
+
 // This webhook is called by dialogflow on a fulfillment request. Adds the correct response
 // And returns.
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
@@ -144,18 +148,8 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 // This function is triggered by the front-end to make a dialogflow request.
 // It simply makes a request, then returns the result.
 exports.dialogFlowRequest = functions.https.onCall((data, context) => {
-  //context.rawRequest = null;
-  //console.log(`CONTEXT: ${JSON.stringify(context)}`);
-  // console.log(`CONTEXT: ${JSON.stringify(context, (key, value) => {
-  //   if (key !== 'rawRequest') {
-  //     return value;
-  //   }
-  // })}`);
-  // cache = null; // Enable garbage collection
-  //const res = { sessionPath: null, message: null };
   if (!data.sessionPath) {
-    data.sessionPath = sessionClient.sessionPath(agentSettings.projectId, idCounter.toString());
-    idCounter++;
+    data.sessionPath = sessionClient.sessionPath(agentSettings.projectId, uniqueId());
   }
   console.log(`SESSION PATH: ${data.sessionPath}`);
   // Make a request to dialogflow based on the text given to the request

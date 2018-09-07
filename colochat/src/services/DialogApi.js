@@ -34,18 +34,15 @@ function formatMessageData(messageData) {
       source: SOURCE.SOURCE_AGENT
     }));
   }
-  console.log(`dataset: ${JSON.stringify(messageDataSet)}`);
   return messageDataSet;
 }
 
 export default {
   getResponse(text) {
     console.time('res');
-    console.log(`Sending with ID ${dialogSessionId}`);
     return dialogFlowRequest({ text: text, sessionPath: dialogSessionId })
       .then(res => {
         console.timeEnd('res');
-        console.log(res.data);
         if (!dialogSessionId) {
           dialogSessionId = res.data.sessionPath;
         }
