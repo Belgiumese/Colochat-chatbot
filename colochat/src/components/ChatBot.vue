@@ -2,7 +2,8 @@
   <div class="hello">
     <message-box 
       :messages="messages" 
-      ref="messageBox"/>
+      ref="messageBox"
+      :is-colo-typing="isColoTyping"/>
     <input 
       type="text" 
       v-model="inputText"
@@ -19,6 +20,9 @@ import DialogApi from '../services/DialogApi.js';
 import SOURCE from '../services/Sources.js';
 import MessageData from '../services/MessageData.js';
 import MessageBox from './MessageBox';
+import Util from '../services/Util.js';
+
+const COLO_TYPE_DELAY = 500;
 
 export default {
   name: 'ChatBot',
@@ -31,14 +35,15 @@ export default {
     return {
       inputText: '',
       messages: [],
-      idCounter: 0
+      idCounter: 0,
+      isColoTyping: true
     };
   },
 
   computed: {
     isInputValid() {
       return this.inputText !== '';
-    },
+    }
   },
 
   methods: {
@@ -48,15 +53,28 @@ export default {
         this.inputText = '';
         // Add human message
         this.addHumanMessage(text);
+
+        // Add artificial delay before typing
+        const typingTimout = setTimeout(() => {
+          this.isColoTyping = true;
+          this.$refs.messageBox.scrollToBottom();
+        }, this.getTypeDelay());
+
         // Submit for response, then add it
-        DialogApi.getResponse(text).then(this.addAgentMessage);
+        DialogApi.getResponse(text).then(response => {
+          // Stop typing
+          clearTimeout(typingTimout);
+
+          // Add response to the screen
+          this.addAgentMessage(response);
+        });
       }
     },
 
     addHumanMessage(text) {
       const messageData = MessageData({
-        source: SOURCE.SOURCE_HUMAN, 
-        text: text, 
+        source: SOURCE.SOURCE_HUMAN,
+        text: text,
         id: this.idCounter++
       });
 
@@ -64,6 +82,10 @@ export default {
     },
 
     addAgentMessage(agentResponses) {
+      // Stop the typing animation
+      this.isColoTyping = false;
+
+      // Add the messages to the screen
       for (let i = 0; i < agentResponses.length; i++) {
         this.addMessage(agentResponses[i]);
       }
@@ -74,6 +96,10 @@ export default {
       this.messages.push(messageData);
       // Update the scroll position
       this.$refs.messageBox.scrollToBottom();
+    },
+
+    getTypeDelay() {
+      return COLO_TYPE_DELAY + Util.getRandomNum(-100, 100);
     }
   },
 
@@ -82,8 +108,7 @@ export default {
     DialogApi.getResponse('who are you').then(this.addAgentMessage);
   }
 };
-
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 </style>

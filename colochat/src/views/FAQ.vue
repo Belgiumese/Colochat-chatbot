@@ -13,12 +13,12 @@
       <div class="faqSection">
         <h3>QUESTION 1</h3>
         <p>To be filled out later. To be filled out later. To be filled out later. To be filled out later. To be filled out later. 
-          To be filled out later. To be filled out later. To be filled out later.</p>
+        To be filled out later. To be filled out later. To be filled out later.</p>
       </div>
       <div class="faqSection">
         <h3>QUESTION 2</h3>
         <p>To be filled out later. To be filled out later. To be filled out later. To be filled out later. To be filled out later. 
-          To be filled out later. To be filled out later. To be filled out later.</p>
+        To be filled out later. To be filled out later. To be filled out later.</p>
       </div>
     </div>
   </div>

@@ -18,8 +18,8 @@
 
 <style>
 /* Any styles here are applied globally to all components. It's unlikely
-  that you need to put anything in here.*/
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+  that you need to put anything in here. */
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
 
 * {
   margin: 0;
@@ -28,7 +28,7 @@
 }
 
 #app {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

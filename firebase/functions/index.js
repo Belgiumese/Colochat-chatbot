@@ -41,23 +41,41 @@ const sessionClient = new dialogflow.SessionsClient();
 process.env.DEBUG = 'dialogflow:debug';
 
 // Given a language and a word to translate, get the translation and return it
+// function getTranslation(language, word) {
+
+//   const languageId = slqLanguageSources[language];
+//   if (!languageId) {
+//     // If this language isn't in the list, reject
+//     return Promise.reject(`Sorry, I'm still learning and don't know that language yet :(`);
+//   }
+
+//   const query = encodeURI(`SELECT * FROM "${languageId}" WHERE LOWER("English") LIKE LOWER('${word}')`);
+//   const url = `https://data.gov.au/api/3/action/datastore_search_sql?sql=${query}`;
+
+//   return axios.get(url)
+//     .then(res => {
+//       // TODO: Do something to pick one if there's more than one result
+//       const results = res.data.result.records;
+
+//       if (results.length === 0) {
+//         // No response
+//         return Promise.reject('Sorry, I don\'t know the translation for that word yet!');
+//       } else {
+//         // For now, just pick the first. Implement fuzzy search later
+//         return results[0][language];
+//       }
+//     }, err => {
+//       console.log(`COLO ERR: ${err}`);
+//       return Promise.reject('Something went wrong and I got confused, please try asking again!');
+//     });
+// }
+
 function getTranslation(language, word) {
-
-  const languageId = slqLanguageSources[language];
-  console.log(`Language: ${language}, ID: ${languageId}, Word: ${word}`);
-  if (!languageId) {
-    // If this language isn't in the list, reject
-    return Promise.reject(`Sorry, I'm still learning and don't know that language yet :(`);
-  }
-
-  const query = encodeURI(`SELECT * FROM "${languageId}" WHERE LOWER("English") LIKE LOWER('${word}')`);
-  const url = `https://data.gov.au/api/3/action/datastore_search_sql?sql=${query}`;
-  console.log(`QUERY URL: ${url}`);
-
-  return axios.get(url)
-    .then(res => {
-      console.log(`TRANSLATE RESULTS: ${JSON.stringify(res.data)}`);
-      // TODO: Do something to pick one if there's more than one result
+  return getSlqData(language,
+    (languageId) => {
+      // Query for some randomly selected fields
+      return encodeURI(`SELECT * FROM "${languageId}" WHERE LOWER("English") LIKE LOWER('${word}')`);
+    }, (res) => {
       const results = res.data.result.records;
 
       if (results.length === 0) {
@@ -67,7 +85,70 @@ function getTranslation(language, word) {
         // For now, just pick the first. Implement fuzzy search later
         return results[0][language];
       }
-    }, err => {
+    });
+}
+
+// function getQuizzes(language, amount) {
+//   const languageId = slqLanguageSources[language];
+//   if (!languageId) {
+//     // If this language isn't in the list, reject
+//     return Promise.reject(`Sorry, I'm still learning and don't know that language yet :(`);
+//   }
+
+//   const query = encodeURI(`SELECT * FROM "${languageId}" ORDER BY RANDOM() LIMIT ${amount}`);
+//   const url = `https://data.gov.au/api/3/action/datastore_search_sql?sql=${query}`;
+
+//   return axios.get(url)
+//     .then(res => {
+//       const results = res.data.result.records;
+
+//       if (results.length === 0) {
+//         return Promise.reject('Sorry, I don\'t know the translation for that word yet!');
+//       } else {
+//         // Filter out unnecessary fields, return array of randomly chosen things to quiz on
+//         return results.map((word) => {
+//           return {
+//             english: word.English,
+//             aboriginal: word[language]
+//           }
+//         })
+//       }
+//     }, err => {
+//       console.log(`COLO ERR: ${err}`);
+//       return Promise.reject('Something went wrong and I got confused, please try asking again!');
+//     });
+// }
+
+function getQuizzes(language, amount) {
+  return getSlqData(language, 
+    (languageId) => {
+      // Query for some randomly selected fields
+      return encodeURI(`SELECT * FROM "${languageId}" ORDER BY RANDOM() LIMIT ${amount}`);
+    }, (res) => {
+      // On success, map results to array and return
+      const results = res.data.result.records;
+
+      return results.map((word) => {
+        return {
+          english: word.English,
+          aboriginal: word[language]
+        };
+      });
+  });
+}
+
+function getSlqData(language, getQuery, processData) {
+  const languageId = slqLanguageSources[language];
+  if (!languageId) {
+    // If this language isn't in the list, reject
+    return Promise.reject(`Sorry, I'm still learning and don't know that language yet :(`);
+  }
+
+  const query = getQuery(languageId);
+  const url = `https://data.gov.au/api/3/action/datastore_search_sql?sql=${query}`;
+
+  return axios.get(url)
+    .then(processData, err => {
       console.log(`COLO ERR: ${err}`);
       return Promise.reject('Something went wrong and I got confused, please try asking again!');
     });
@@ -141,6 +222,14 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       return agent;
     })
   });
+
+  intentMap.set('quiz', agent => {
+    const language = capitaliseText(formatText(agent.parameters.aboriginal_language));
+
+    // return getQuizzes(language, 5).then(quizzes => {
+
+    // })
+  })
 
   agent.handleRequest(intentMap);
 });

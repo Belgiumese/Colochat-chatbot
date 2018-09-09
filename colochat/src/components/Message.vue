@@ -18,7 +18,7 @@ export default {
 
   props: {
     messageData: {
-      default: () => {},
+      default: () => { },
       type: Object
     }
   },
@@ -56,7 +56,6 @@ export default {
       .messageText {
         color: white;
         text-align: left;
-        //display: inline-block;
       }
     }
   }
