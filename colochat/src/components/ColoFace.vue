@@ -17,9 +17,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .coloFace {
-    width: 300px;
-    height: 300px;
-    border: 2px dashed blue;
-  }
+.coloFace {
+  width: 300px;
+  height: 300px;
+  border: 2px dashed blue;
+}
 </style>

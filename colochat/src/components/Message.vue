@@ -32,32 +32,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .message {
-    text-align: right;
+.message {
+  text-align: right;
 
-    &.botText {
-      text-align: left;
-
-      .messageContainer {
-        background-color: rgb(105, 37, 231);
-      }
-    }
+  &.botText {
+    text-align: left;
 
     .messageContainer {
-      display: inline-block;
-      border-radius: 20px;
-      padding: 8px 12px;
-      max-width: 46%;
-      margin: 7px 0;
-      background-color: rgb(136, 129, 145);
-      font-size: 16px;
-      font-family: 'Open Sans', sans-serif;
-
-      .messageText {
-        color: white;
-        text-align: left;
-      }
+      background-color: rgb(105, 37, 231);
     }
   }
+
+  .messageContainer {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 8px 12px;
+    max-width: 46%;
+    margin: 7px 0;
+    background-color: rgb(136, 129, 145);
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+
+    .messageText {
+      color: white;
+      text-align: left;
+    }
+  }
+}
 </style>
 
