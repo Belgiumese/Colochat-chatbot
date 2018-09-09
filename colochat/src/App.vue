@@ -4,9 +4,9 @@
       This is the nav bar with links to conponents. These pages are specified
       in the router.js file. -->
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/faq">FAQ</router-link> |
-      <router-link to="/info">Further info</router-link>
+      <router-link to="/">CHAT</router-link> |
+      <router-link to="/faq">HELP</router-link> |
+      <router-link to="/info">INFO</router-link>
     </div>
 
     <!-- The router view shows the entire page you're currently on -->

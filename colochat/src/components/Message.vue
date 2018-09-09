@@ -3,9 +3,9 @@
     class="message" 
     :class="{ botText: isBot }">
     <div class="messageContainer">
-      <p 
-        class="messageText" 
-      >{{ messageData.text }}</p>
+      <p class="messageText">
+        {{ messageData.text }}
+      </p>
     </div>
   </div>
 </template>

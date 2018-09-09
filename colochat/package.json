@@ -21,7 +21,7 @@
     "@vue/cli-service": "^3.0.0",
     "api-ai-javascript": "^2.0.0-beta.14",
     "dialogflow": "^0.6.0",
-    "eslint": "^5.4.0",
+    "eslint": "^5.5.0",
     "eslint-plugin-vue": "^4.7.1",
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
