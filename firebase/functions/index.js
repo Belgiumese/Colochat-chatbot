@@ -15,24 +15,24 @@ const agentSettings = {
 };
 
 const slqLanguageSources = {
-  Barunggam: 'ec6accc5-07d9-44d3-bf6d-0b363a73f3ef',
-  Butchulla: '35350512-a668-4bde-a58c-46092a07d1de',
-  Dharumbal: 'b86e4743-d65b-4f68-935a-1c57480cde3e',
-  Duungidjawu: '81f76d7f-4ada-40c3-976c-6a24b459b1e0',
-  Gooreng: 'a0ca1aee-e886-4ea1-978a-f0c80d4558be',
-  Gunggari: '2d2ef02c-1c89-4011-91ba-a4d6e95551df',
-  'Kala-kawaw-ya': '92fde7ae-f2e8-484e-81db-f717cc5d2707',
-  'Kuku-yalanji': 'ab7ab13e-a66c-4a50-b5d2-034e4a0683bc',
-  Nggerikudi: '91dbac9b-d853-424e-8ce0-29a8bc74399b',
-  Nggerrikwidhi: 'c06c3742-d9df-4eb4-9264-21bba62a1a2a',
-  Turubal: 'da3ac749-840a-479d-9466-09eb8d6e389d',
-  'Wakka-wakka': 'dfa3b2cc-0788-456a-b132-2db687b6257a',
-  Warrgamay: 'c340e92d-ed7f-478e-ab7e-d79137441327',
-  Yugambeh: '4ea75e17-cb1e-473e-9b6b-c0227b1fa787',
-  Yugarabul: '34b5f663-6c32-4ad9-8f8e-7f63ce5156f2',
-  Yuggera: 'ea4031e6-dc7a-4584-ac38-482f570a9637',
-  Yuwaalaraay: 'ad345bd7-8544-4ff4-9b0e-8225b4050f6f',
-  Yuwibara: '1a7f0c01-d27f-4865-be23-c2276655a529'
+  Barunggam: { id: 'ec6accc5-07d9-44d3-bf6d-0b363a73f3ef', column: 'Barunggam' },
+  Butchulla: { id: '35350512-a668-4bde-a58c-46092a07d1de', column: 'Butchulla' },
+  Dharumbal: { id: 'b86e4743-d65b-4f68-935a-1c57480cde3e', column: 'Dharumbal' },
+  Duungidjawu: { id: '81f76d7f-4ada-40c3-976c-6a24b459b1e0', column: 'Duungidjawu' },
+  Gooreng: { id: 'a0ca1aee-e886-4ea1-978a-f0c80d4558be', column: 'Gooreng Gooreng' },
+  Gunggari: { id: '2d2ef02c-1c89-4011-91ba-a4d6e95551df', column: 'Gunggari' },
+  'Kala-kawaw-ya': { id: '92fde7ae-f2e8-484e-81db-f717cc5d2707', column: 'Kala Kawaw Ya' },
+  'Kuku-yalanji': { id: 'ab7ab13e-a66c-4a50-b5d2-034e4a0683bc', column: 'KuKu Yalanji' },
+  Nggerikudi: { id: '91dbac9b-d853-424e-8ce0-29a8bc74399b', column: 'Nggerikudi' },
+  Nggerrikwidhi: { id: 'c06c3742-d9df-4eb4-9264-21bba62a1a2a', column: 'Nggerikudi' },
+  Turubal: { id: 'da3ac749-840a-479d-9466-09eb8d6e389d', column: 'Turubul' },
+  'Wakka-wakka': { id: 'dfa3b2cc-0788-456a-b132-2db687b6257a', column: 'Wakka Wakka' },
+  Warrgamay: { id: 'c340e92d-ed7f-478e-ab7e-d79137441327', column: 'Warrgamay' },
+  Yugambeh: { id: '4ea75e17-cb1e-473e-9b6b-c0227b1fa787', column: 'Yugambeh' },
+  Yugarabul: { id: '34b5f663-6c32-4ad9-8f8e-7f63ce5156f2', column: 'Yugarabul' },
+  Yuggera: { id: 'ea4031e6-dc7a-4584-ac38-482f570a9637', column: 'Yuggera' },
+  Yuwaalaraay: { id: 'ad345bd7-8544-4ff4-9b0e-8225b4050f6f', column: 'Yuwaalaraay' },
+  Yuwibara: { id: '1a7f0c01-d27f-4865-be23-c2276655a529', column: 'Yuwibara' },
 }
 
 const sessionClient = new dialogflow.SessionsClient();
@@ -82,8 +82,9 @@ function getTranslation(language, word) {
         // No response
         return Promise.reject('Sorry, I don\'t know the translation for that word yet!');
       } else {
+        const aboColumnName = slqLanguageSources[language].column;
         // For now, just pick the first. Implement fuzzy search later
-        return results[0][language];
+        return results[0][aboColumnName];
       }
     });
 }
@@ -120,25 +121,26 @@ function getTranslation(language, word) {
 // }
 
 function getQuizzes(language, amount) {
-  return getSlqData(language, 
+  return getSlqData(language,
     (languageId) => {
       // Query for some randomly selected fields
       return encodeURI(`SELECT * FROM "${languageId}" ORDER BY RANDOM() LIMIT ${amount}`);
     }, (res) => {
       // On success, map results to array and return
       const results = res.data.result.records;
+      const aboColumnName = slqLanguageSources[language].column;
 
       return results.map((word) => {
         return {
           english: word.English,
-          aboriginal: word[language]
+          aboriginal: word[aboColumnName]
         };
       });
-  });
+    });
 }
 
 function getSlqData(language, getQuery, processData) {
-  const languageId = slqLanguageSources[language];
+  const languageId = slqLanguageSources[language].id;
   if (!languageId) {
     // If this language isn't in the list, reject
     return Promise.reject(`Sorry, I'm still learning and don't know that language yet :(`);
@@ -174,7 +176,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   // Fix for dialogflow smalltalk, which does not have an intent property and crashes the
   // dialogflow-fulfillment handleRequest function. Pretend to be an intent called 'none'.
   if (!request.body.queryResult.intent) {
-    request.body.queryResult.intent = { displayName: 'none', isFallback: true};
+    request.body.queryResult.intent = { displayName: 'none', isFallback: true };
   }
 
   const fulfillmentText = request.body.queryResult.fulfillmentText;
