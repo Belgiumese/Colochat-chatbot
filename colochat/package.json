@@ -6,13 +6,15 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "vue-cli-service serve"
+    "start": "vue-cli-service serve",
+    "icons": "vsvg -s ./src/assets/icons -t ./src/assets/icons-compiled --es6"
   },
   "dependencies": {
     "firebase": "^5.4.1",
     "jquery": "^3.3.1",
     "vue": "^2.5.17",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-svgicon": "^3.1.0"
   },
   "devDependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",

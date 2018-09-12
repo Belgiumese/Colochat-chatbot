@@ -13,7 +13,7 @@
       <button 
         @click="submit"
         :disabled="!isInputValid" 
-      >▶</button>
+      ><svgicon name="play-solid"/></button>
     </div>
   </div>
 </template>
@@ -24,6 +24,8 @@ import SOURCE from '../services/Sources.js';
 import MessageData from '../services/MessageData.js';
 import MessageBox from './MessageBox';
 import Util from '../services/Util.js';
+
+import '../assets/icons-compiled/play-solid.js';
 
 const COLO_TYPE_DELAY = 500;
 
@@ -126,6 +128,9 @@ $bgGrey: rgb(248, 249, 250);
   #typeBox {
     border-top: 2px solid grey;
     padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     input {
       padding: 12px 20px;
@@ -138,11 +143,18 @@ $bgGrey: rgb(248, 249, 250);
 
     button {
       font-size: 1.5em;
-      padding: 5px 10px;
+      padding: 10px;
       border-radius: 2em;
       background-color: $accent2;
       border: none;
       color: white;
+
+      svg {
+        display: block;
+        margin: auto;
+        width: 20px;
+        height: 20px;
+      }
     }
   }
 }

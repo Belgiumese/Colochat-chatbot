@@ -2,6 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import $ from 'jquery';
 import router from './router';
+import SvgIcon from 'vue-svgicon';
 
 // This is just an auto-generated main file which
 // starts up the application. The exact details
@@ -17,6 +18,10 @@ const jQUery = {
   }
 };
 Vue.use(jQUery);
+
+Vue.use(SvgIcon, {
+  tagName: 'svgicon'
+});
 
 new Vue({
   router,

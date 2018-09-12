@@ -42,14 +42,33 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #958781;
 }
 
 #nav a {
   padding: 0 20px;
   font-size: 1.2em;
+  text-decoration: none;
+  color: #958781;
 }
 
 .margin-auto {
   margin: auto;
 }
+
+.svg-icon {
+  width: 16px;
+  height: 16px;
+  color: inherit;
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
+}
+
+.svg-fill {
+  fill: currentColor;
+  stroke: none;
+}
 </style>
+
+
