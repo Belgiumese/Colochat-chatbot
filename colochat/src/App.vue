@@ -19,7 +19,7 @@
 <style>
 /* Any styles here are applied globally to all components. It's unlikely
   that you need to put anything in here. */
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans|Averia+Serif+Libre");
 
 * {
   margin: 0;
@@ -33,6 +33,23 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 10px;
+}
+
+#nav {
+  background: white;
+  height: 50px;
+  font-family: "Averia Serif Libre", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#nav a {
+  padding: 0 20px;
+  font-size: 1.2em;
+}
+
+.margin-auto {
+  margin: auto;
 }
 </style>

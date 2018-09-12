@@ -74,9 +74,8 @@ export default {
 <style lang="scss" scoped>
 .messageBox {
   width: 600px;
-  height: 600px;
-  background-color: rgb(236, 243, 250);
-  margin: 20px auto;
+  height: 550px;
+  margin: 0 auto;
   padding: 15px;
   overflow-y: auto;
   position: relative;
@@ -99,7 +98,7 @@ export default {
 
   .messageContainer {
     display: inline-block;
-    background-color: rgb(105, 37, 231);
+    background-color: rgb(241, 87, 138);
     border-radius: 20px;
     padding: 8px 10px;
     margin: 7px 0;
