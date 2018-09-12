@@ -140,12 +140,13 @@ function getQuizzes(language, amount) {
 }
 
 function getSlqData(language, getQuery, processData) {
-  const languageId = slqLanguageSources[language].id;
-  if (!languageId) {
+  const languageInfo = slqLanguageSources[language];
+  if (!languageInfo) {
     // If this language isn't in the list, reject
     return Promise.reject(`Sorry, I'm still learning and don't know that language yet :(`);
   }
 
+  const languageId = languageInfo.id;
   const query = getQuery(languageId);
   const url = `https://data.gov.au/api/3/action/datastore_search_sql?sql=${query}`;
 
