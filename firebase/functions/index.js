@@ -7,6 +7,7 @@ const { Card, Suggestion } = require('dialogflow-fulfillment');
 const axios = require('axios');
 
 const ID_SIZE = 10;
+const QUIZ_QUESTIONS = 5;
 
 const agentSettings = {
   projectId: 'newagent-9dde0',
@@ -159,7 +160,9 @@ function getSlqData(language, getQuery, processData) {
 
 // Remove any trailing whitespace and common punctuation.
 function formatText(inputString) {
-  return inputString.trim().replace(/[?.!]/g, '');
+  //const trimRegex = RegExp(`^[\s\W]*(.*?)[\s\W]$`);
+
+  return inputString.trim().replace(/[?.!,]/g, '');
 }
 
 // Capitalise the first letter of the string, required for languages
@@ -226,13 +229,62 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     })
   });
 
-  intentMap.set('quiz', agent => {
-    const language = capitaliseText(formatText(agent.parameters.aboriginal_language));
+  // This is triggered when someone starts a quiz. Get random words to translate and
+  // add them as a parameter on the context.
+  intentMap.set('quiz_start', agent => {
+    const language = capitaliseText(formatText(agent.parameters.language));
+    console.log(`Quiz language ${language}`);
 
-    // return getQuizzes(language, 5).then(quizzes => {
+    return getQuizzes(language, 5).then(quizzes => {
+      console.log(`Quizzes: ${JSON.stringify(quizzes)}`);
+      // Update the lifespan and the 5 words
+      const context = agent.getContext('quiz_context');
+      context.lifespan = 10;
+      context.parameters.answers = quizzes;
+      agent.setContext(context);
 
-    // })
-  })
+      // Prompt for a question
+      agent.add(`What does ${quizzes[0].aboriginal} mean?`);
+
+      return agent;
+    });
+
+
+  });
+
+  intentMap.set('quiz_answer', agent => {
+    // On answer, check if it's correct based on context parameters 
+    const userAnswer = formatText(agent.parameters.answer);
+
+    const context = agent.getContext('quiz_context');
+    const quizzes = context.parameters.answers
+    let progress = context.parameters.current_progress;
+    const correctAnswer = quizzes[progress].english;
+
+    console.log(`User answer: '${userAnswer}', correct: '${correctAnswer}'`)
+
+    if (userAnswer === correctAnswer) {
+      agent.add('correct answer!');
+      context.parameters.score++;
+    } else {
+      agent.add(`Sorry, the correct answer is ${correctAnswer}`);
+    }
+
+    progress++;
+
+    if (progress === QUIZ_QUESTIONS) {
+      // TODO: tell it to finish quiz here
+      agent.add('Finished quiz :p');
+    } else {
+      context.parameters.current_progress = progress;
+      agent.setContext(context);
+
+      // Ask next question
+      agent.add(`What does ${quizzes[progress].aboriginal} mean?`);
+    }
+
+    return agent;
+  });
 
   agent.handleRequest(intentMap);
 });
