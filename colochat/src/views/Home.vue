@@ -21,10 +21,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$accent: hsl(340, 100%, 79%);
+
 .home {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: $accent;
+  min-height: calc(100vh - 50px);
 }
 </style>
 

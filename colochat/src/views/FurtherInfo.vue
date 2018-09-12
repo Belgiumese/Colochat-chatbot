@@ -1,9 +1,11 @@
 <template>
   <div class="furtherInfo">
     <div class="infoContainer">
-      <colo-face/>
-      <h1>Information</h1>
-      <h2>Find out more about reviving Aboriginal languages</h2>
+      <div id="infoTop">
+        <colo-face class="margin-auto"/>
+        <h1>Info</h1>
+        <h2>Find out more about Aboriginal language revival!</h2>
+      </div>
       <div class="infoSection">
         <h3>HEADING 1</h3>
         <p>To be filled out later. To be filled out later. To be filled out later. To be filled out later. To be filled out later. 
@@ -31,24 +33,55 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$myvar: hsl(340, 100%, 79%);
+$accent: hsl(340, 100%, 79%);
 
 .furtherInfo {
-  background-color: $myvar;
+  background-color: $accent;
   display: block;
   position: relative;
-  padding: 50px;
+  padding: 50px 150px;
   min-height: 100vh;
+
+  p {
+    font-size: 1.1em;
+  }
+
+  h1,
+  h3,
+  h4 {
+    font-family: "Averia Serif Libre", sans-serif;
+  }
+
+  h1 {
+    font-size: 5em;
+  }
 
   .infoContainer {
     background-color: white;
     text-align: center;
-    padding: 80px 100px;
+    padding: 50px 0;
     border-radius: 30px;
 
+    #infoTop {
+      font-size: 0.8em;
+    }
+
     .infoSection {
-      padding: 30px 0;
+      padding: 30px 50px 10px 50px;
       text-align: left;
+      max-width: 900px;
+      margin: auto;
+
+      h3 {
+        color: $accent;
+        font-size: 1.5em;
+        margin-bottom: 10px;
+      }
+
+      h4 {
+        font-size: 1.3em;
+        margin: 30px 0 10px 0;
+      }
     }
   }
 }

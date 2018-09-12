@@ -39,7 +39,7 @@ export default {
     text-align: left;
 
     .messageContainer {
-      background-color: rgb(105, 37, 231);
+      background-color: rgb(241, 87, 138);
     }
   }
 
@@ -56,6 +56,7 @@ export default {
     .messageText {
       color: white;
       text-align: left;
+      word-wrap: break-word;
     }
   }
 }
