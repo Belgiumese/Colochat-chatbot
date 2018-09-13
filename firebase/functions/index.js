@@ -263,7 +263,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 
     console.log(`User answer: '${userAnswer}', correct: '${correctAnswer}'`)
 
-    if (userAnswer === correctAnswer) {
+    if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
       agent.add('correct answer!');
       context.parameters.score++;
     } else {
@@ -273,8 +273,9 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     progress++;
 
     if (progress === QUIZ_QUESTIONS) {
-      // TODO: tell it to finish quiz here
-      agent.add('Finished quiz :p');
+      agent.add(`You have scored ${context.parameters.score} out of 
+        ${QUIZ_QUESTIONS} on the quiz!`);
+      agent.clearContext('quiz_context');
     } else {
       context.parameters.current_progress = progress;
       agent.setContext(context);
