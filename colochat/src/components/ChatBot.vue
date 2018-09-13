@@ -103,8 +103,18 @@ export default {
       this.$refs.messageBox.scrollToBottom();
     },
 
+    scrollToBottomImmediate() {
+      this.$refs.messageBox.scrollToBottomImmediate();
+    },
+
     getTypeDelay() {
       return COLO_TYPE_DELAY + Util.getRandomNum(-100, 100);
+    }
+  },
+  
+  watch: {
+    '$route' () {
+      this.scrollToBottomImmediate();
     }
   },
 

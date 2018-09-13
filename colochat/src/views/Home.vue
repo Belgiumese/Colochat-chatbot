@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <!-- For now, this page only contains the chatbot component -->
-    <chat-bot/>
+    <chat-bot ref="chatBot"/>
     <colo-face/>
   </div>
 </template>
@@ -17,6 +17,10 @@ export default {
     'chat-bot': ChatBot,
     'colo-face': ColoFace
   }
+  // afterRouteEnter() {
+  //   console.log('mounted!!');
+  //   this.$refs.ChatBot.scrollToBottom();
+  // }
 };
 </script>
 

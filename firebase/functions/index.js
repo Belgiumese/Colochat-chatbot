@@ -6,6 +6,10 @@ const { WebhookClient } = require('dialogflow-fulfillment');
 const { Card, Suggestion } = require('dialogflow-fulfillment');
 const axios = require('axios');
 
+const slqRequest = axios.create({
+  timeout: 4000
+});
+
 const ID_SIZE = 10;
 const QUIZ_QUESTIONS = 5;
 
@@ -90,37 +94,6 @@ function getTranslation(language, word) {
     });
 }
 
-// function getQuizzes(language, amount) {
-//   const languageId = slqLanguageSources[language];
-//   if (!languageId) {
-//     // If this language isn't in the list, reject
-//     return Promise.reject(`Sorry, I'm still learning and don't know that language yet :(`);
-//   }
-
-//   const query = encodeURI(`SELECT * FROM "${languageId}" ORDER BY RANDOM() LIMIT ${amount}`);
-//   const url = `https://data.gov.au/api/3/action/datastore_search_sql?sql=${query}`;
-
-//   return axios.get(url)
-//     .then(res => {
-//       const results = res.data.result.records;
-
-//       if (results.length === 0) {
-//         return Promise.reject('Sorry, I don\'t know the translation for that word yet!');
-//       } else {
-//         // Filter out unnecessary fields, return array of randomly chosen things to quiz on
-//         return results.map((word) => {
-//           return {
-//             english: word.English,
-//             aboriginal: word[language]
-//           }
-//         })
-//       }
-//     }, err => {
-//       console.log(`COLO ERR: ${err}`);
-//       return Promise.reject('Something went wrong and I got confused, please try asking again!');
-//     });
-// }
-
 function getQuizzes(language, amount) {
   return getSlqData(language,
     (languageId) => {
@@ -150,10 +123,15 @@ function getSlqData(language, getQuery, processData) {
   const languageId = languageInfo.id;
   const query = getQuery(languageId);
   const url = `https://data.gov.au/api/3/action/datastore_search_sql?sql=${query}`;
+  console.log(`trying to go to ${url}`);
 
-  return axios.get(url)
+  return slqRequest.get(url)
     .then(processData, err => {
-      console.log(`COLO ERR: ${err}`);
+      console.log(`COLO ERR: ${err} in axios`);
+      return Promise.reject('Something went wrong and I got confused, please try asking again!');
+    })
+    .catch(err => {
+      console.log(`COLO ERR: ${err} in axios 2`);
       return Promise.reject('Something went wrong and I got confused, please try asking again!');
     });
 }
@@ -223,10 +201,11 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       agent.add(`The word for ${word} in ${language} is ${translation}!`);
       return agent;
     }).catch((err) => {
+      console.log(`Adding ${err} to agent`);
       // On failure, respond with the translation issue.
       agent.add(err);
       return agent;
-    })
+    });
   });
 
   // This is triggered when someone starts a quiz. Get random words to translate and
@@ -247,7 +226,12 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       agent.add(`What does ${quizzes[0].aboriginal} mean?`);
 
       return agent;
-    });
+    }).catch((err) => {
+      // On failure, respond with the issue.
+      console.log(`Adding ${err} to agent`);
+      agent.add(err);
+      return agent;
+    })
 
 
   });

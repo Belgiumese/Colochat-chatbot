@@ -65,6 +65,11 @@ export default {
           );
         }
       });
+    },
+
+    scrollToBottomImmediate() {
+      const mBox = this.$refs.messageBox;
+      mBox.scrollTop =  mBox.scrollHeight - mBox.clientHeight;
     }
   }
 };
