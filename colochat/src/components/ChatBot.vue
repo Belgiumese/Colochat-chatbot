@@ -29,6 +29,12 @@ import '../assets/icons-compiled/play-solid.js';
 
 const COLO_TYPE_DELAY = 500;
 
+const INITIAL_MESSAGE = {
+  MESSAGE: `Hi, I'm Colo the koala. You can ask me to translate words
+            into Aboriginal languages, or give you a quiz! How are you?`,
+  DELAY: 2000
+};
+
 export default {
   name: 'ChatBot',
 
@@ -41,7 +47,8 @@ export default {
       inputText: '',
       messages: [],
       idCounter: 0,
-      isColoTyping: true
+      isColoTyping: true,
+      initialMessageSent: false
     };
   },
 
@@ -103,6 +110,21 @@ export default {
       this.$refs.messageBox.scrollToBottom();
     },
 
+    sendFakeInitialMessage() {
+      if (!this.initialMessageSent) {
+        this.initialMessageSent = true;
+        this.isColoTyping = false;
+
+        const messageData = MessageData({
+          source: SOURCE.SOURCE_AGENT,
+          text: INITIAL_MESSAGE.MESSAGE,
+          id: this.idCounter++
+        });
+
+        this.addMessage(messageData);
+      }
+    },
+
     scrollToBottomImmediate() {
       this.$refs.messageBox.scrollToBottomImmediate();
     },
@@ -119,8 +141,13 @@ export default {
   },
 
   created() {
-    // Get Colo to start the conversation by sending a hidden message
-    DialogApi.getResponse('who are you').then(this.addAgentMessage);
+    DialogApi.getResponse('who are you')
+      .then(this.sendFakeInitialMessage);
+  },
+
+  mounted() {
+    // Get Colo to start the conversation by sending a hidden message. 
+    setTimeout(this.sendFakeInitialMessage, INITIAL_MESSAGE.DELAY);
   }
 };
 </script>
