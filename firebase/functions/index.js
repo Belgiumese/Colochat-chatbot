@@ -2,8 +2,7 @@
 
 const functions = require('firebase-functions');
 const dialogflow = require('dialogflow');
-const { WebhookClient } = require('dialogflow-fulfillment');
-const { Card, Suggestion } = require('dialogflow-fulfillment');
+const { WebhookClient, Payload, Suggestion } = require('dialogflow-fulfillment');
 const axios = require('axios');
 
 const slqRequest = axios.create({
@@ -85,7 +84,9 @@ function getTranslation(language, word) {
 
       if (results.length === 0) {
         // No response
-        return Promise.reject('Sorry, I don\'t know the translation for that word yet!');
+        return Promise.reject(
+          `I'm still learning, and I don't know the translation for that word yet! 
+          Try asking me to translate a body part.`);
       } else {
         const aboColumnName = slqLanguageSources[language].column;
         // For now, just pick the first. Implement fuzzy search later
@@ -94,22 +95,41 @@ function getTranslation(language, word) {
     });
 }
 
+function getRandom(min, max) {
+  return Math.round(Math.random() * (max - min) + min);
+}
+
 function getQuizzes(language, amount) {
+  // Get more than required to give some incorrect options
+  const allOptionsAmount = amount * 3;
+
   return getSlqData(language,
     (languageId) => {
       // Query for some randomly selected fields
-      return encodeURI(`SELECT * FROM "${languageId}" ORDER BY RANDOM() LIMIT ${amount}`);
+      return encodeURI(`SELECT * FROM "${languageId}" ORDER BY RANDOM() LIMIT ${allOptionsAmount}`);
     }, (res) => {
       // On success, map results to array and return
       const results = res.data.result.records;
       const aboColumnName = slqLanguageSources[language].column;
 
-      return results.map((word) => {
+      const allWords = results.map((word) => {
         return {
           english: word.English,
-          aboriginal: word[aboColumnName]
+          aboriginal: word[aboColumnName],
+          fakeOptions: []
         };
       });
+
+      // We only want {amount}, the rest are for random options
+      for (let i = 0; i < amount; i++) {
+        // For each entry, get 3 fake ones
+        for (let j = 0; j < 3; j++) {
+          const randomWord = allWords[getRandom(i + 1, allWords.length - 1)];
+          allWords[i].fakeOptions.push(randomWord.english);
+        }
+      }
+
+      return allWords.slice(0, amount);
     });
 }
 
@@ -129,10 +149,6 @@ function getSlqData(language, getQuery, processData) {
     .then(processData, err => {
       console.log(`COLO ERR: ${err} in axios`);
       return Promise.reject('Something went wrong and I got confused, please try asking again!');
-    })
-    .catch(err => {
-      console.log(`COLO ERR: ${err} in axios 2`);
-      return Promise.reject('Something went wrong and I got confused, please try asking again!');
     });
 }
 
@@ -140,7 +156,7 @@ function getSlqData(language, getQuery, processData) {
 function formatText(inputString) {
   //const trimRegex = RegExp(`^[\s\W]*(.*?)[\s\W]$`);
 
-  return inputString.trim().replace(/[?.!,]/g, '');
+  return inputString.trim().replace(/[?.!,'"]/g, '');
 }
 
 // Capitalise the first letter of the string, required for languages
@@ -165,23 +181,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   console.log(`RESULT: ${JSON.stringify(request.body.queryResult)}`);
 
   const agent = new WebhookClient({ request, response });
-  // // Uncomment and edit to make your own intent handler
-  // // uncomment `intentMap.set('your intent name here', yourFunctionHandler);`
-  // // below to get this function to be run when a Dialogflow intent is matched
-  // function yourFunctionHandler(agent) {
-  //   agent.add(`This message is from Dialogflow's Cloud Functions for Firebase inline editor!`);
-  //   agent.add(new Card({
-  //       title: `Title: this is a card title`,
-  //       imageUrl: 'https://dialogflow.com/images/api_home_laptop.svg',
-  //       text: `This is the body text of a card.  You can even use line\n  breaks and emoji! 💁`,
-  //       buttonText: 'This is a button',
-  //       buttonUrl: 'https://docs.dialogflow.com/'
-  //     })
-  //   );
-  //   agent.add(new Suggestion(`Quick Reply`));
-  //   agent.add(new Suggestion(`Suggestion`));
-  //   agent.setContext({ name: 'weather', lifespan: 2, parameters: { city: 'Rome' }});
-
   let intentMap = new Map();
 
   // If triggering the 'none' intent set before, just respond with the fulfillment text.
@@ -201,7 +200,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       agent.add(`The word for ${word} in ${language} is ${translation}!`);
       return agent;
     }).catch((err) => {
-      console.log(`Adding ${err} to agent`);
+      console.log(err);
       // On failure, respond with the translation issue.
       agent.add(err);
       return agent;
@@ -214,7 +213,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     const language = capitaliseText(formatText(agent.parameters.language));
     console.log(`Quiz language ${language}`);
 
-    return getQuizzes(language, 5).then(quizzes => {
+    return getQuizzes(language, QUIZ_QUESTIONS).then(quizzes => {
       console.log(`Quizzes: ${JSON.stringify(quizzes)}`);
       // Update the lifespan and the 5 words
       const context = agent.getContext('quiz_context');
@@ -223,7 +222,15 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       agent.setContext(context);
 
       // Prompt for a question
-      agent.add(`What does ${quizzes[0].aboriginal} mean?`);
+      // agent.add(new Payload("PLATFORM_UNSPECIFIED", {
+      //   message: `What does ${quizzes[0].aboriginal} mean?`,
+      //   responseOptions: ['Leg', 'Arm', 'Blood']
+      // }));
+      //agent.add(`What does ${quizzes[0].aboriginal} mean?`);
+      const options = quizzes[0].fakeOptions.slice(0);
+      options.push(quizzes[0].english);
+      console.log(`OPTIONS: ${JSON.stringify(options)}`);
+      askQuizQuestion(agent, quizzes[0].aboriginal, options, 0, QUIZ_QUESTIONS);
 
       return agent;
     }).catch((err) => {
@@ -232,8 +239,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       agent.add(err);
       return agent;
     })
-
-
   });
 
   intentMap.set('quiz_answer', agent => {
@@ -255,6 +260,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     }
 
     progress++;
+    const currentQuiz = quizzes[progress];
 
     if (progress === QUIZ_QUESTIONS) {
       agent.add(`You have scored ${context.parameters.score} out of 
@@ -265,7 +271,8 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       agent.setContext(context);
 
       // Ask next question
-      agent.add(`What does ${quizzes[progress].aboriginal} mean?`);
+      const options = currentQuiz.fakeOptions.concat(currentQuiz.english);
+      askQuizQuestion(agent, currentQuiz.aboriginal, options, progress, QUIZ_QUESTIONS);
     }
 
     return agent;
@@ -273,6 +280,15 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 
   agent.handleRequest(intentMap);
 });
+
+function askQuizQuestion(agent, aboriginalWord, options, progress, totalAmount) {
+  // agent.add(new Payload("PLATFORM_UNSPECIFIED", {
+  //   message: `What does ${aboriginalWord} mean?`,
+  //   responseOptions: options
+  // }));
+  agent.add(`(${progress + 1}/${totalAmount}) What does ${aboriginalWord} mean?`);
+  options.forEach(option => agent.add(new Suggestion(option)));
+}
 
 // This function is triggered by the front-end to make a dialogflow request.
 // It simply makes a request, then returns the result.
@@ -292,6 +308,7 @@ exports.dialogFlowRequest = functions.https.onCall((data, context) => {
     },
     // Send back the actual data, cutting out useless information
   }).then(agentResponse => {
+    console.log(`AGENT RESPONSE: ${JSON.stringify(agentResponse)}`);
     //res.message = agentResponse[0];
     return { message: agentResponse[0], sessionPath: data.sessionPath };
   });

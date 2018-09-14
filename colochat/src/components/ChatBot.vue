@@ -3,7 +3,8 @@
     <message-box 
       :messages="messages" 
       ref="messageBox"
-      :is-colo-typing="isColoTyping"/>
+      :is-colo-typing="isColoTyping"
+      @response-choice="responseChoice"/>
     <div id="typeBox">
       <input 
         type="text" 
@@ -63,24 +64,29 @@ export default {
       if (this.isInputValid) {
         const text = this.inputText;
         this.inputText = '';
-        // Add human message
-        this.addHumanMessage(text);
 
-        // Add artificial delay before typing
-        const typingTimout = setTimeout(() => {
-          this.isColoTyping = true;
-          this.$refs.messageBox.scrollToBottom();
-        }, this.getTypeDelay());
-
-        // Submit for response, then add it
-        DialogApi.getResponse(text).then(response => {
-          // Stop typing
-          clearTimeout(typingTimout);
-
-          // Add response to the screen
-          this.addAgentMessage(response);
-        });
+        this.submitMessage(text);
       }
+    },
+
+    submitMessage(text) {
+      // Add human message
+      this.addHumanMessage(text);
+
+      // Add artificial delay before typing
+      const typingTimout = setTimeout(() => {
+        this.isColoTyping = true;
+        this.$refs.messageBox.scrollToBottom();
+      }, this.getTypeDelay());
+
+      // Submit for response, then add it
+      DialogApi.getResponse(text).then(response => {
+        // Stop typing
+        clearTimeout(typingTimout);
+
+        // Add response to the screen
+        this.addAgentMessage(response);
+      });
     },
 
     addHumanMessage(text) {
@@ -131,6 +137,10 @@ export default {
 
     getTypeDelay() {
       return COLO_TYPE_DELAY + Util.getRandomNum(-100, 100);
+    },
+
+    responseChoice(choice) {
+      this.submitMessage(choice);
     }
   },
   

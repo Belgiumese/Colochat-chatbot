@@ -5,9 +5,11 @@
     <!-- Array of messages to show -->
     <transition-group name="messages">
       <message 
-        v-for="message in messages" 
+        v-for="(message, i) in messages" 
         :message-data="message"
-        :key="message.id"/>
+        :is-last-message="i === (messages.length - 1)"
+        :key="message.id"
+        @response-choice="$emit('response-choice', $event)"/>
     </transition-group>
 
     <!-- The Colo is typing icon -->
