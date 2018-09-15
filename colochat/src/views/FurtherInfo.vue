@@ -2,7 +2,7 @@
   <div class="furtherInfo">
     <div class="infoContainer">
       <div id="infoTop">
-        <colo-face class="margin-auto"/>
+        <colo-face class="colo-info margin-auto"/>
         <h1>Info</h1>
         <h2>Find out more about Aboriginal language revival!</h2>
       </div>
@@ -38,7 +38,7 @@ $accent: hsl(340, 100%, 79%);
 .furtherInfo {
   display: block;
   position: relative;
-  padding: 50px 150px;
+  padding: 7vh 10vw;
   min-height: 100vh;
   background: $accent;
 
@@ -56,10 +56,14 @@ $accent: hsl(340, 100%, 79%);
     font-size: 5em;
   }
 
+  .colo-info {
+    margin: 10px auto;
+  }
+
   .infoContainer {
     background-color: white;
     text-align: center;
-    padding: 50px 0;
+    padding: 5vh 0;
     border-radius: 30px;
 
     #infoTop {

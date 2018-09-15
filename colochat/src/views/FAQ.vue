@@ -104,7 +104,7 @@ $accent: hsl(340, 100%, 79%);
 .faq {
   display: block;
   position: relative;
-  padding: 50px 150px;
+  padding: 7vh 10vw;
   min-height: 100vh;
   background: $accent;
 
@@ -121,8 +121,18 @@ $accent: hsl(340, 100%, 79%);
   .faqContainer {
     background-color: white;
     text-align: center;
-    padding: 50px 0;
+    padding: 5vh 0;
     border-radius: 30px;
+
+    @media only screen and (max-width: 1000px) {
+      #faqTop {
+        flex-direction: column;
+
+        h1 {
+          text-align: center;
+        }
+      }
+    }
 
     #faqTop {
       display: flex;
