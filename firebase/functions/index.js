@@ -122,16 +122,21 @@ function getQuizzes(language, amount) {
 
       // We only want {amount}, the rest are for random options
       for (let i = 0; i < amount; i++) {
-        // For each entry, get 3 fake ones
         const wordSubset = allWords.slice(i + 1, allWords.length);
 
+        // For each entry, get 3 fake ones
         for (let j = 0; j < 3; j++) {
+          // Get a random word from the list of options
           const randomIndex = getRandom(0, wordSubset.length - 1);
           const randomWord = wordSubset[randomIndex];
           wordSubset.splice(randomIndex, 1);
 
           allWords[i].fakeOptions.push(randomWord.english);
         }
+
+        // Add the real one in at a random spot
+        const randomIndex = getRandom(0, allWords[i].fakeOptions.length - 1);
+        allWords[i].fakeOptions.splice(randomIndex, 0, allWords[i].english);
       }
 
       return allWords.slice(0, amount);
@@ -250,8 +255,11 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       context.parameters.answers = quizzes;
       agent.setContext(context);
 
-      const options = quizzes[0].fakeOptions.slice(0);
-      options.push(quizzes[0].english);
+      const options = quizzes[0].fakeOptions;
+      // const options = quizzes[0].fakeOptions.slice(0);
+      // const randomIndex = getRandom(0, options.length - 1);
+      // options.splice(randomIndex, 0, quizzes[0].english);
+
       console.log(`OPTIONS: ${JSON.stringify(options)}`);
       askQuizQuestion(agent, quizzes[0].aboriginal, options, 0, QUIZ_QUESTIONS);
 
@@ -296,7 +304,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       agent.setContext(context);
 
       // Ask next question
-      const options = currentQuiz.fakeOptions.concat(currentQuiz.english);
+      const options = currentQuiz.fakeOptions; //.concat(currentQuiz.english);
       askQuizQuestion(agent, currentQuiz.aboriginal, options, progress, QUIZ_QUESTIONS);
     }
 
