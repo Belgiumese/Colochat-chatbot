@@ -31,8 +31,8 @@ import '../assets/icons-compiled/play-solid.js';
 const COLO_TYPE_DELAY = 500;
 
 const INITIAL_MESSAGE = {
-  MESSAGE: `Hi, I'm Colo the koala. You can ask me to translate words
-            into Aboriginal languages, or give you a quiz! How are you?`,
+  MESSAGE: `Hey, it’s Colo!! 🐨🍃 You can chat to me here and ask me to translate or quiz you on a bunch of Aboriginal languages. 😮
+  Also, don't forget to check out the HELP page if you get a little stuck. 😖`,
   DELAY: 2000
 };
 
