@@ -1,5 +1,5 @@
 <template>
-  <div class="furtherInfo">
+  <div class="furtherInfo bg">
     <div class="infoContainer">
       <div id="infoTop">
         <colo-face class="margin-auto"/>
@@ -36,10 +36,6 @@ export default {
 $accent: hsl(340, 100%, 79%);
 
 .furtherInfo {
-  background-image: url("../assets/bg.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
   display: block;
   position: relative;
   padding: 50px 150px;

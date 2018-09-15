@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home bg">
     <!-- For now, this page only contains the chatbot component -->
     <chat-bot ref="chatBot"/>
     <colo-face/>

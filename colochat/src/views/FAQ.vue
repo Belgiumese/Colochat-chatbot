@@ -1,6 +1,6 @@
 <template>
   <div class="faq">
-    <div class="faqContainer">
+    <div class="faqContainer bg">
       <div id="faqTop">
         <colo-face/>
         <div>

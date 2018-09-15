@@ -53,6 +53,13 @@
   color: #958781;
 }
 
+.bg {
+  background-image: url("../assets/bg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .margin-auto {
   margin: auto;
 }
