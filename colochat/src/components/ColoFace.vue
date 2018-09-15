@@ -20,7 +20,6 @@ export default {
 .coloFace {
   width: 400px;
   height: 300px;
-  border: 2px dashed blue;
   background-image: url("../assets/colo_happy.png");
   background-position: center;
   background-size: contain;

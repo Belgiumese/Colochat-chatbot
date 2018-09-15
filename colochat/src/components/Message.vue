@@ -86,14 +86,17 @@ export default {
   .responseContainer {
     .responseOption {
       padding: 7px 10px;
-      margin-right: 15px;
+      margin: 2px 4px;
       border: 1px solid grey;
       border-radius: 15px;
       background-color: transparent;
       font-size: 16px;
+      outline: none;
+      transition: background-color 0.15s ease;
 
       &:hover {
         cursor: pointer;
+        background-color: rgb(232, 233, 238);
       }
     }
   }

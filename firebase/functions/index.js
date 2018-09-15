@@ -123,8 +123,13 @@ function getQuizzes(language, amount) {
       // We only want {amount}, the rest are for random options
       for (let i = 0; i < amount; i++) {
         // For each entry, get 3 fake ones
+        const wordSubset = allWords.slice(i + 1, allWords.length);
+
         for (let j = 0; j < 3; j++) {
-          const randomWord = allWords[getRandom(i + 1, allWords.length - 1)];
+          const randomIndex = getRandom(0, wordSubset.length - 1);
+          const randomWord = wordSubset[randomIndex];
+          wordSubset.splice(randomIndex, 1);
+
           allWords[i].fakeOptions.push(randomWord.english);
         }
       }
@@ -191,42 +196,60 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   // This is triggered when someone asks for a translation. Get the response from SQL, and
   // Return it.
   intentMap.set('translation', agent => {
-    //agent.add('Let me check that for you...');
-    const language = capitaliseText(formatText(agent.parameters.aboriginal_language));
-    const word = formatText(agent.parameters.Word);
+    let language = agent.parameters.aboriginal_language;
+    let word = agent.parameters.Word;
 
-    return getTranslation(language, word).then((translation) => {
-      // If succeeds, send the translation back to the user.
-      agent.add(`The word for ${word} in ${language} is ${translation}!`);
+    if (!word) {
+      // Prompt for a word
+      agent.add('What word would you like me to translate?');
       return agent;
-    }).catch((err) => {
-      console.log(err);
-      // On failure, respond with the translation issue.
-      agent.add(err);
+
+    } else if (!language) {
+      // Prompt for a language, add all languages as options
+      agent.add('Which language would you like to translate to?');
+      addAllLanguageOptions(agent);
       return agent;
-    });
+
+    } else {
+      language = capitaliseText(formatText(language));
+      word = formatText(word);
+
+      return getTranslation(language, word).then((translation) => {
+        // If succeeds, send the translation back to the user.
+        agent.add(`The word for ${word} in ${language} is ${translation}!`);
+        return agent;
+
+      }).catch((err) => {
+        console.log(err);
+        // On failure, respond with the translation issue.
+        agent.add(err);
+        return agent;
+      });
+    }
   });
 
   // This is triggered when someone starts a quiz. Get random words to translate and
   // add them as a parameter on the context.
   intentMap.set('quiz_start', agent => {
-    const language = capitaliseText(formatText(agent.parameters.language));
-    console.log(`Quiz language ${language}`);
+    let language = agent.parameters.language;
+
+    if (!language) {
+      // Prompt for a language
+      agent.add('Which language would you like to be quizzed in?');
+      addAllLanguageOptions(agent);
+      return agent;
+    }
+
+    language = capitaliseText(formatText(language));
 
     return getQuizzes(language, QUIZ_QUESTIONS).then(quizzes => {
       console.log(`Quizzes: ${JSON.stringify(quizzes)}`);
       // Update the lifespan and the 5 words
       const context = agent.getContext('quiz_context');
-      context.lifespan = 10;
+      context.lifespan = 1;
       context.parameters.answers = quizzes;
       agent.setContext(context);
 
-      // Prompt for a question
-      // agent.add(new Payload("PLATFORM_UNSPECIFIED", {
-      //   message: `What does ${quizzes[0].aboriginal} mean?`,
-      //   responseOptions: ['Leg', 'Arm', 'Blood']
-      // }));
-      //agent.add(`What does ${quizzes[0].aboriginal} mean?`);
       const options = quizzes[0].fakeOptions.slice(0);
       options.push(quizzes[0].english);
       console.log(`OPTIONS: ${JSON.stringify(options)}`);
@@ -265,9 +288,11 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     if (progress === QUIZ_QUESTIONS) {
       agent.add(`You have scored ${context.parameters.score} out of 
         ${QUIZ_QUESTIONS} on the quiz!`);
-      agent.clearContext('quiz_context');
+      agent.clearOutgoingContexts();
+      //agent.setFollowupEvent('quiz_end_event');
     } else {
       context.parameters.current_progress = progress;
+      context.lifespan = 1;
       agent.setContext(context);
 
       // Ask next question
@@ -282,11 +307,15 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 });
 
 function askQuizQuestion(agent, aboriginalWord, options, progress, totalAmount) {
-  // agent.add(new Payload("PLATFORM_UNSPECIFIED", {
-  //   message: `What does ${aboriginalWord} mean?`,
-  //   responseOptions: options
-  // }));
   agent.add(`(${progress + 1}/${totalAmount}) What does ${aboriginalWord} mean?`);
+  addAllOptions(agent, options);
+}
+
+function addAllLanguageOptions(agent) {
+  addAllOptions(agent, Object.keys(slqLanguageSources));
+}
+
+function addAllOptions(agent, options) {
   options.forEach(option => agent.add(new Suggestion(option)));
 }
 
