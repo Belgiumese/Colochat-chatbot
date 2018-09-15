@@ -36,7 +36,10 @@ export default {
 $accent: hsl(340, 100%, 79%);
 
 .furtherInfo {
-  background-color: $accent;
+  background-image: url("../assets/bg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   display: block;
   position: relative;
   padding: 50px 150px;
