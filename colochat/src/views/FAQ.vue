@@ -102,7 +102,6 @@ export default {
 $accent: hsl(340, 100%, 79%);
 
 .faq {
-  background-color: $accent;
   display: block;
   position: relative;
   padding: 50px 150px;

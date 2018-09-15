@@ -54,7 +54,7 @@
 }
 
 .bg {
-  background-image: url("../assets/bg.jpg");
+  background-image: url("./assets/bg.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

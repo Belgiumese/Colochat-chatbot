@@ -31,7 +31,6 @@ $accent: hsl(340, 100%, 79%);
   display: flex;
   justify-content: center;
   align-items: center;
-  background: $accent;
   min-height: calc(100vh - 50px);
 }
 </style>
