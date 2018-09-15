@@ -1,5 +1,5 @@
 <template>
-  <div class="faq bg">
+  <div class="faq">
     <div class="faqContainer">
       <div id="faqTop">
         <colo-face/>
@@ -106,6 +106,7 @@ $accent: hsl(340, 100%, 79%);
   position: relative;
   padding: 50px 150px;
   min-height: 100vh;
+  background: $accent;
 
   p {
     font-size: 1.1em;

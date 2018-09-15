@@ -1,5 +1,5 @@
 <template>
-  <div class="furtherInfo bg">
+  <div class="furtherInfo">
     <div class="infoContainer">
       <div id="infoTop">
         <colo-face class="margin-auto"/>
@@ -40,6 +40,7 @@ $accent: hsl(340, 100%, 79%);
   position: relative;
   padding: 50px 150px;
   min-height: 100vh;
+  background: $accent;
 
   p {
     font-size: 1.1em;
