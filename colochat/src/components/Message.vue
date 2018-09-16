@@ -70,7 +70,7 @@ export default {
     display: inline-block;
     border-radius: 20px;
     padding: 8px 12px;
-    max-width: 46%;
+    max-width: 55%;
     margin: 7px 0;
     background-color: rgb(136, 129, 145);
     font-size: 16px;
