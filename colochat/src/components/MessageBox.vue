@@ -166,3 +166,19 @@ export default {
   }
 }
 </style>
+
+<style lang="scss">
+.ps__rail-y {
+  .ps__thumb-y {
+    width: 9px;
+  }
+
+  &:hover,
+  &.ps--clicking {
+    .ps__thumb-y {
+      width: 12px;
+    }
+  }
+}
+</style>
+
