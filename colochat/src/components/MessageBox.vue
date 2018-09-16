@@ -33,6 +33,8 @@
 import Vue from 'vue';
 import Message from './Message';
 
+import PerfectScrollBar from 'perfect-scrollbar';
+
 export default {
   name: 'MessageBox',
 
@@ -51,11 +53,19 @@ export default {
     }
   },
 
+  data() {
+    return {
+      scrollBar: null
+    };
+  },
+
   methods: {
     scrollToBottom() {
       const mBox = this.$refs.messageBox;
 
       Vue.nextTick(() => {
+        this.addOrRemoveScrollbar();
+
         const newScroll = mBox.scrollHeight - mBox.clientHeight;
 
         if (newScroll > mBox.scrollTop) {
@@ -72,13 +82,23 @@ export default {
     scrollToBottomImmediate() {
       const mBox = this.$refs.messageBox;
       mBox.scrollTop =  mBox.scrollHeight - mBox.clientHeight;
+    },
+
+    addOrRemoveScrollbar() {
+      this.scrollBar.update();
     }
+  },
+
+  mounted() {
+    this.scrollBar = new PerfectScrollBar(this.$refs.messageBox);
   }
 };
 </script>
 
 
 <style lang="scss" scoped>
+@import "../assets/css/perfect-scrollbar.css";
+
 .messageBox {
   width: 600px;
   height: 550px;
