@@ -34,6 +34,7 @@ import Vue from 'vue';
 import Message from './Message';
 
 import PerfectScrollBar from 'perfect-scrollbar';
+import '../../node_modules/perfect-scrollbar/css/perfect-scrollbar.css';
 
 export default {
   name: 'MessageBox',
@@ -97,8 +98,6 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../assets/css/perfect-scrollbar.css";
-
 .messageBox {
   width: 600px;
   height: 550px;
