@@ -36,23 +36,6 @@
   color: #2c3e50;
 }
 
-#nav {
-  background: white;
-  height: 50px;
-  font-family: "Averia Serif Libre", sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #958781;
-}
-
-#nav a {
-  padding: 0 20px;
-  font-size: 1.2em;
-  text-decoration: none;
-  color: #958781;
-}
-
 .margin-auto {
   margin: auto;
 }
@@ -71,5 +54,30 @@
   stroke: none;
 }
 </style>
+
+<style lang="scss">
+#nav {
+  background: white;
+  height: 50px;
+  font-family: "Averia Serif Libre", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #958781;
+
+  a {
+    padding: 0 20px;
+    font-size: 1.2em;
+    text-decoration: none;
+    color: #958781;
+
+    &.router-link-exact-active {
+      color: #c43879;
+      font-weight: 600;
+    }
+  }
+}
+</style>
+
 
 
