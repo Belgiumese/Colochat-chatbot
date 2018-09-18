@@ -2,7 +2,7 @@
 
 const functions = require('firebase-functions');
 const dialogflow = require('dialogflow');
-const { WebhookClient, Payload, Suggestion } = require('dialogflow-fulfillment');
+const { WebhookClient, Suggestion } = require('dialogflow-fulfillment');
 const axios = require('axios');
 
 const slqRequest = axios.create({
@@ -330,6 +330,7 @@ function addAllOptions(agent, options) {
 // This function is triggered by the front-end to make a dialogflow request.
 // It simply makes a request, then returns the result.
 exports.dialogFlowRequest = functions.https.onCall((data, context) => {
+
   if (!data.sessionPath) {
     data.sessionPath = sessionClient.sessionPath(agentSettings.projectId, uniqueId());
   }
@@ -346,7 +347,18 @@ exports.dialogFlowRequest = functions.https.onCall((data, context) => {
     // Send back the actual data, cutting out useless information
   }).then(agentResponse => {
     console.log(`AGENT RESPONSE: ${JSON.stringify(agentResponse)}`);
-    //res.message = agentResponse[0];
-    return { message: agentResponse[0], sessionPath: data.sessionPath };
+
+    // Cut out non-necessary information
+    const response = agentResponse[0];
+    const filteredResponse = {
+      responseId: response.responseId,
+      queryResult: {
+        fulfillmentMessages: response.queryResult.fulfillmentMessages,
+        fulfillmentText: response.queryResult.fulfillmentText,
+        webhookPayload: response.queryResult.webhookPayload
+      }
+    }
+
+    return { message: filteredResponse, sessionPath: data.sessionPath };
   });
 });
