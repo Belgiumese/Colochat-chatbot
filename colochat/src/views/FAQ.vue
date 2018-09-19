@@ -49,7 +49,7 @@
           <span class="faqCode">Yuwibara</span>
           <br>
           <br>
-          You can ask me questions about basic aboriginal related Australian history, and I can quiz you on words that you’ve learnt throughout your conversation.
+          You can ask me questions about basic aboriginal related Australian history, and I can quiz you on words that you’ve learnt throughout our conversation.
         </p>
       </div>
       <div 
