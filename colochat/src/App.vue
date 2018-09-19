@@ -6,7 +6,7 @@
     <div id="nav">
       <router-link to="/">CHAT</router-link> |
       <router-link to="/faq">HELP</router-link> |
-      <router-link to="/info">INFO</router-link>
+      <router-link to="/info">MORE RESOURCES</router-link>
     </div>
 
     <!-- The router view shows the entire page you're currently on -->
