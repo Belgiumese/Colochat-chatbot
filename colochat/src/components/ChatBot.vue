@@ -31,7 +31,7 @@ import '../assets/icons-compiled/play-solid.js';
 const COLO_TYPE_DELAY = 500;
 
 const INITIAL_MESSAGE = {
-  MESSAGE: `Hey, it’s Colo!! 🐨🍃 You can chat to me here and ask me to translate or quiz you on a bunch of Aboriginal languages. 😮
+  MESSAGE: ` it’s Colo!! 🐨🍃 You can chat to me here and ask me to translate or quiz you on a bunch of Aboriginal languages. 😮
   Also, don't forget to check out the HELP page if you get a little stuck. 😖`,
   DELAY: 2000
 };
@@ -121,9 +121,18 @@ export default {
         this.initialMessageSent = true;
         this.isColoTyping = false;
 
+        // Check if they have a name listed
+        let message;
+        const name = localStorage.getItem('name');
+        if (name) {
+          message = `Hey ${name},` + INITIAL_MESSAGE.MESSAGE;
+        } else {
+          message = 'Hey,' + INITIAL_MESSAGE.MESSAGE;
+        }
+
         const messageData = MessageData({
           source: SOURCE.SOURCE_AGENT,
-          text: INITIAL_MESSAGE.MESSAGE,
+          text: message,
           id: this.idCounter++
         });
 
