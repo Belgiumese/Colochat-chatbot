@@ -36,6 +36,12 @@ $accent: hsl(340, 100%, 79%);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+
+  @media only screen and (max-width: 1000px) {
+    .coloFace {
+      display: none;
+    }
+  }
 }
 </style>
 

@@ -18,7 +18,8 @@ export default {
 
 <style lang="scss" scoped>
 .coloFace {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   height: 300px;
   background-image: url("../assets/colo_happy.png");
   background-position: center;

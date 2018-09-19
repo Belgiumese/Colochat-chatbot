@@ -5,26 +5,54 @@
         <colo-face/>
         <div>
           <h1>Help</h1>
-          <h2><span class="faqNumber">1</span>Who is Colo?</h2>        
-          <h2><span class="faqNumber">2</span>What can Colo do?</h2>
-          <h2><span class="faqNumber">3</span>How can I use Colochat?</h2>
-          <h2><span class="faqNumber">4</span>Can Colo Respond to All of My Questions?</h2>
-          <h2><span class="faqNumber">5</span>Who is Colochat for?</h2>
+          <h2><span class="faqNumber">1</span><a href="#faq1">Who is Colo?</a></h2>     
+          <h2><span class="faqNumber">2</span><a href="#faq2">What can Colo do?</a></h2>      
+          <h2><span class="faqNumber">3</span><a href="#faq3">How can I use Colochat?</a></h2>      
+          <h2><span class="faqNumber">4</span><a href="#faq4">Can Colo Respond to All of My Questions?</a></h2>     
+          <h2><span class="faqNumber">5</span><a href="#faq5">Who is Colochat for?</a></h2>
         </div>
       </div>
-      <div class="faqSection">
+      <div 
+        class="faqSection" 
+        id="faq1">
         <h3>1 Who is Colo?</h3>
         <p>
           Hi, I’m Colo the Koala, your personal artificial intelligence assistant, I am familiar with Australian aboriginal languages and culture. I can also teach you indigenous culture and languages and learn more with you.
         </p>
       </div>
-      <div class="faqSection">
+      <div 
+        class="faqSection" 
+        id="faq2">
         <h3>2 What can Colo do?</h3>
-        <p>
-          You can chat with me about a range of topics. I can perform translations between English and eight Aboriginal Languages which are Bundjalung, Gumbaynggirr, Muruwari, Paakantyi, Wiradjuri, Yandruwandha, Yuwaalaraay, Gamilaraay, you can ask me questions about basic aboriginal related Australian history, and I can quiz you on words that you’ve learnt throughout your conversation.
+        <p id="faqLanguages">
+          You can chat with me about a range of topics. I can perform translations between English and 18 Aboriginal Languages which are:
+          <br>
+          <span class="faqCode">Barunggam</span>
+          <span class="faqCode">Butchulla</span>
+          <span class="faqCode">Dharumbal</span>
+          <span class="faqCode">Duungidjawu</span>
+          <span class="faqCode">Gooreng</span>
+          <span class="faqCode">Gunggari</span>
+          <span class="faqCode">Kala-kawaw-ya</span>
+          <span class="faqCode">Kuku-yalanji</span>
+          <span class="faqCode">Nggerikudi</span>
+          <span class="faqCode">Nggerrikwidhi</span>
+          <span class="faqCode">Turubal</span>
+          <span class="faqCode">Wakka-wakka</span>
+          <span class="faqCode">Warrgamay</span>
+          <span class="faqCode">Yugambeh</span>
+          <span class="faqCode">Yugarabul</span>
+          <span class="faqCode">Yuggera</span>
+          <span class="faqCode">Yuwaalaraay</span>
+          <span class="faqCode">Yuwibara</span>
+          <br>
+          <br>
+          You can ask me questions about basic aboriginal related Australian history, and I can quiz you on words that you’ve learnt throughout your conversation.
         </p>
       </div>
-      <div class="faqSection">
+      <div 
+        class="faqSection" 
+        id="faq3">
         <h3>3 How can I use Colochat?</h3>
         <p>
           These are some common topics you can talk to me about:
@@ -70,13 +98,17 @@
           </p>
         </div>
       </div>
-      <div class="faqSection">
+      <div 
+        class="faqSection" 
+        id="faq4">
         <h3>4 Can Colo Respond to All of My Questions?</h3>
         <p>
           Although I'll try my best to answer your questions and translate for you, I'm still learning. Please be patient with me! If I can't answer your question it might help if you try to rephrase it differently for me.
         </p>
       </div>
-      <div class="faqSection">
+      <div 
+        class="faqSection" 
+        id="faq5">
         <h3>5 Who is Colochat for?</h3>
         <p>
           ColoChat can be used by anyone, however, it is specifically targeted towards students in grades 5 - 9. It is intended to be a tool distributed by teachers within in their classrooms.
@@ -142,6 +174,15 @@ $accent: hsl(340, 100%, 79%);
       list-style-position: inside;
       padding: 0 50px;
 
+      a {
+        text-decoration: none;
+        color: black;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
       div {
         margin: 10px;
         font-size: 0.8em;
@@ -183,14 +224,20 @@ $accent: hsl(340, 100%, 79%);
 
       #faqExamples {
         margin-left: 30px;
+      }
 
+      .faqCode {
+        padding: 3px 5px;
+        border-radius: 4px;
+        color: #dc1482;
+        background-color: #f1f1f1;
+        display: inline-block;
+        margin: 10px 0;
+      }
+
+      #faqLanguages {
         .faqCode {
-          padding: 3px 5px;
-          border-radius: 4px;
-          color: #dc1482;
-          background-color: #f1f1f1;
-          display: inline-block;
-          margin: 10px 0;
+          margin: 5px;
         }
       }
     }

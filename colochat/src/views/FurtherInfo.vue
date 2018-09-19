@@ -9,15 +9,11 @@
       <div class="infoSection">
         <h3>The Creation of Colochat</h3>
         <p>
-          Colochat is an interactive web-app that is designed to bring awareness and understanding to Aboriginal languages and culture in a new medium. Colochat is able to quiz you on aboriginal words and provide translations between aboriginal language and English. 
+          Colochat is an interactive web-app that is designed to bring awareness and understanding to Aboriginal languages and culture in a new medium. Colochat is created to be fun and interactive and to provide a more memorable alternative to in-class lessons for school children from grades 5-9. In the absence of the availability of an Aboriginal language teacher, Colo is readily available to provide translations, quizzes and facts on Aboriginal language.
         </p>
         <br>
         <p>
-          Colochat is created to be fun and interactive to provide a more memorable alternative to in-class lessons for school children from grades 5-9. In the absence of the availability of an aboriginal teacher, Colochat is able take the place of the teacher and students are each individually assigned a “teacher”. Colo is also readily available as long as there is internet available on the student’s personal computers.
-        </p>
-        <br>
-        <p>
-          The purpose of Colochat is to spark an interest to motivate students to further explore the topic. Additionally, the issue that we are trying to address here is the endangerment of Aboriginal languages. Being the native language of Australia, it is important that we preserve the country’s native language.
+          The purpose of Colochat is to spark an interest in students and motivate them to further explore the topic. Additionally, the issue that we are trying to address here is the endangerment of Aboriginal languages as it is important that we preserve the country’s native language. 
         </p>
       </div>
       <div class="infoSection">
