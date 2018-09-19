@@ -17,7 +17,9 @@
         id="faq1">
         <h3>1 Who is Colo?</h3>
         <p>
-          Hi, I’m Colo the Koala, your personal artificial intelligence assistant, I am familiar with Australian aboriginal languages and culture. I can also teach you indigenous culture and languages and learn more with you.
+          Hi, I’m Colo the Koala! 🐨 I like studying Australian Aboriginal languages and culture.  
+          When I’m not learning, I'm' just eating 🍃 or sleeping. 
+          You can ask me to do a bunch of fun things like translate and quiz you! So come chat with me and I’ll try my best to answer your questions and learn more with you.
         </p>
       </div>
       <div 
