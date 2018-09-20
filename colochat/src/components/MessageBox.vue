@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       scrollBar: null,
-      isScrollAnimating: false
+      scrollAnimateCount: 0
     };
   },
 
@@ -74,7 +74,7 @@ export default {
         if (newScroll > mBox.scrollTop) {
           let scrollPos = { pos: mBox.scrollTop };
 
-          this.isScrollAnimating = true;
+          this.scrollAnimateCount++;
           requestAnimationFrame(this.animate);
 
           new TWEEN.Tween(scrollPos)
@@ -83,7 +83,7 @@ export default {
             .onUpdate(() => {
               mBox.scrollTop = scrollPos.pos;
             })
-            .onComplete(() => this.isScrollAnimating = false)
+            .onComplete(() => this.scrollAnimateCount--)
             .start();
         }
       });
@@ -100,7 +100,7 @@ export default {
 
     animate(time) {
       TWEEN.update(time);
-      if (this.isScrollAnimating) {
+      if (this.scrollAnimateCount) {
         requestAnimationFrame(this.animate);
       }
     }
