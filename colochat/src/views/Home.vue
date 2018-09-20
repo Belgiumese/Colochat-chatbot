@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <!-- For now, this page only contains the chatbot component -->
+    <meet-colo 
+      v-if="showPopup" 
+      @exit="closePopup"/>
     <chat-bot ref="chatBot"/>
     <colo-face/>
   </div>
@@ -10,17 +12,38 @@
 // @ is an alias to /src
 import ChatBot from '../components/ChatBot.vue';
 import ColoFace from '../components/ColoFace.vue';
+import MeetColo from '../components/MeetColo.vue';
 
 export default {
   name: 'Home',
   components: {
     'chat-bot': ChatBot,
-    'colo-face': ColoFace
+    'colo-face': ColoFace,
+    'meet-colo': MeetColo
+  },
+
+  data() {
+    return {
+      userName: null,
+      showPopup: false
+    };
+  },
+
+  methods: {
+    closePopup() {
+      this.showPopup = false;
+      this.$refs.chatBot.start();
+    }
+  },
+
+  mounted() {
+    this.userName = localStorage.getItem('name');
+    if (!this.userName) {
+      this.showPopup = true;
+    } else {
+      this.$refs.chatBot.start();
+    }
   }
-  // afterRouteEnter() {
-  //   console.log('mounted!!');
-  //   this.$refs.ChatBot.scrollToBottom();
-  // }
 };
 </script>
 

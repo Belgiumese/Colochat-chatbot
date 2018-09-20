@@ -1,29 +1,54 @@
 <template>
-  <div class="coloFace"/>
+  <div class="coloFace">
+    <img 
+      ref="image"
+      :src="imgName" 
+      alt="Colo mascot">
+  </div>
 </template>
 
 <script>
+import ColoHappy from '../assets/colo_happy.png';
+import ColoSleepy from '../assets/colo_sleepy.png';
+import ColoStandard from '../assets/colo_standard.png';
+
 export default {
   // Contains any variables on the object
   data() {
-    return {};
+    return {
+      imgName: ColoHappy
+    };
   },
 
   // Methods on the object
   methods: {
-    // TODO: Add methods to change emotion
+    setHappy() {
+      this.setEmotion(ColoHappy);
+    },
+
+    setSleepy() {
+      this.setEmotion(ColoSleepy);
+    },
+
+    setStandard() {
+      this.setEmotion(ColoStandard);
+    },
+
+    setEmotion(imgUrl) {
+      //const imgName = faces[emotion];
+      if (imgUrl) {
+        this.imgName = imgUrl;
+      }
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .coloFace {
-  width: 100%;
-  max-width: 400px;
-  height: 300px;
-  background-image: url("../assets/colo_happy.png");
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
+  img {
+    width: 400px;
+    height: 300px;
+  }
 }
 </style>

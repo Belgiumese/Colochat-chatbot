@@ -31,9 +31,10 @@ import '../assets/icons-compiled/play-solid.js';
 const COLO_TYPE_DELAY = 500;
 
 const INITIAL_MESSAGE = {
-  MESSAGE: `Hey, it’s Colo!! 🐨🍃 You can chat to me here and ask me to translate or quiz you on a bunch of Aboriginal languages. 😮
+  MESSAGE: ` it’s Colo!! 🐨🍃 You can chat to me here and ask me to translate or quiz you on a bunch of Aboriginal languages. 😮
   Also, don't forget to check out the HELP page if you get a little stuck. 😖`,
-  DELAY: 2000
+  MAX_DELAY: 2000,
+  MIN_DELAY: 1000
 };
 
 export default {
@@ -49,7 +50,9 @@ export default {
       messages: [],
       idCounter: 0,
       isColoTyping: true,
-      initialMessageSent: false
+      initialMessageSent: false,
+      initialMessageReceived: false,
+      started: false
     };
   },
 
@@ -121,9 +124,18 @@ export default {
         this.initialMessageSent = true;
         this.isColoTyping = false;
 
+        // Check if they have a name listed
+        let message;
+        const name = localStorage.getItem('name');
+        if (name) {
+          message = `Hey ${name},` + INITIAL_MESSAGE.MESSAGE;
+        } else {
+          message = 'Hey,' + INITIAL_MESSAGE.MESSAGE;
+        }
+
         const messageData = MessageData({
           source: SOURCE.SOURCE_AGENT,
-          text: INITIAL_MESSAGE.MESSAGE,
+          text: message,
           id: this.idCounter++
         });
 
@@ -141,6 +153,16 @@ export default {
 
     responseChoice(choice) {
       this.submitMessage(choice);
+    },
+
+    start() {
+      console.log('started');
+      this.started = true;
+      if (this.initialMessageReceived) {
+        setTimeout(this.sendFakeInitialMessage, INITIAL_MESSAGE.MIN_DELAY);
+      } else {
+        setTimeout(this.sendFakeInitialMessage, INITIAL_MESSAGE.MAX_DELAY);
+      }
     }
   },
   
@@ -152,12 +174,14 @@ export default {
 
   created() {
     DialogApi.getResponse('who are you')
-      .then(this.sendFakeInitialMessage);
-  },
-
-  mounted() {
-    // Get Colo to start the conversation by sending a hidden message. 
-    setTimeout(this.sendFakeInitialMessage, INITIAL_MESSAGE.DELAY);
+      .then(() => {
+        // Can't show it until user has closed intro message
+        if (this.started) {
+          this.sendFakeInitialMessage();
+        } else {
+          this.initialMessageReceived = true;
+        }
+      });
   }
 };
 </script>

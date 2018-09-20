@@ -26,6 +26,8 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
+  border: none;
+  outline: none;
 }
 
 #app {
