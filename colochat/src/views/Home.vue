@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <meet-colo v-if="showPopup"/>
+    <meet-colo 
+      v-if="showPopup" 
+      @exit="closePopup"/>
     <chat-bot ref="chatBot"/>
     <colo-face/>
   </div>
@@ -22,18 +24,25 @@ export default {
 
   data() {
     return {
-      userName: null
+      userName: null,
+      showPopup: false
     };
   },
 
-  computed: {
-    showPopup() {
-      return this.userName === null;
+  methods: {
+    closePopup() {
+      this.showPopup = false;
+      this.$refs.chatBot.start();
     }
   },
 
   mounted() {
     this.userName = localStorage.getItem('name');
+    if (!this.userName) {
+      this.showPopup = true;
+    } else {
+      this.$refs.chatBot.start();
+    }
   }
 };
 </script>

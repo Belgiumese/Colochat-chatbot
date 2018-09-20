@@ -29,11 +29,4 @@ const router = new Router({
   ]
 });
 
-// router.afterEach(function (to, from) {
-//   const handler = to.matched[0].components.default.afterRouteEnter;
-//   if (handler) {
-//     handler(to, from);
-//   }
-// });
-
 export default router;

@@ -16,6 +16,7 @@ const config = {
 firebase.initializeApp(config);
 
 let dialogSessionId = null;
+// const RES_TIMEOUT = 15000;
 
 // Initialise dialogflow functions
 // make an intent request to dialogflow
@@ -39,21 +40,6 @@ function formatMessageData(messageData) {
       responseOptions = unfilteredMessage.quickReplies.quickReplies;
     }
   });
-  // const messages = s.filter(data => data.message === 'text').map(data => data.text.text[0]);
-
-  // if (messages[0] === '') {
-  //   // We got a payload, decode that instead
-  //   if (messageData.queryResult.webhookPayload) {
-  //     const payload = messageData.queryResult.webhookPayload.fields.null.structValue.fields;
-
-  //     messages[0] = payload.message.stringValue;
-  //     responseOptions = payload.responseOptions.listValue.values
-  //       .map((value) => value.stringValue);
-  //   } else {
-  //     // Something went wrong, return empty array
-  //     return [];
-  //   }
-  // }
 
   for (let i = 0; i < messages.length; i++) {
     messageDataSet.push(MessageData({
@@ -68,16 +54,33 @@ function formatMessageData(messageData) {
   return messageDataSet;
 }
 
+function errorResponse(err) {
+  console.log(err);
+
+  return [MessageData({
+    id: Number.MAX_SAFE_INTEGER,
+    text: `Sorry, something went wrong and I got confused.
+           Please try asking again!`,
+    source: SOURCE.SOURCE_AGENT
+  })];
+}
+
 export default {
   getResponse(text) {
-    console.time('res');
+    // Set a timeout for if the message doesn't arrive
+    //const timeout = setTimeout(() => errorResponse('Timeout'), RES_TIMEOUT);
+
     return dialogFlowRequest({ text: text, sessionPath: dialogSessionId })
       .then(res => {
-        console.timeEnd('res');
+        //clearTimeout(timeout);
+
         if (!dialogSessionId) {
           dialogSessionId = res.data.sessionPath;
         }
         return formatMessageData(res.data.message);
+      }).catch(err => {
+        //clearTimeout(timeout);
+        return errorResponse(err);
       });
   }
 };

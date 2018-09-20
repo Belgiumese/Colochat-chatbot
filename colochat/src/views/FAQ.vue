@@ -2,7 +2,7 @@
   <div class="faq">
     <div class="faqContainer">
       <div id="faqTop">
-        <colo-face/>
+        <colo-face ref="coloFace"/>
         <div>
           <h1>Help</h1>
           <h2><span class="faqNumber">1</span>Who is Colo?</h2>        
@@ -87,13 +87,16 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import ColoFace from '../components/ColoFace.vue';
 
 export default {
   name: 'FAQ',
   components: {
     'colo-face': ColoFace
+  },
+
+  mounted() {
+    this.$refs.coloFace.setStandard();
   }
 };
 </script>
