@@ -4,7 +4,10 @@
       v-if="showPopup" 
       @exit="closePopup"/>
     <chat-bot ref="chatBot"/>
-    <colo-face/>
+    <div class="faceContainer">
+      <div class="faceCircle"/>
+      <colo-face class="coloFace"/>
+    </div>
   </div>
 </template>
 
@@ -59,6 +62,31 @@ $accent: hsl(340, 100%, 79%);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+
+  .faceContainer {
+    position: relative;
+    z-index: 1;
+    margin-left: 10px;
+
+    .faceCircle {
+      $size: 390px;
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -45%);
+      z-index: 0;
+      width: $size;
+      height: $size;
+      border-radius: 100%;
+      background-color: #6e4e45;
+    }
+
+    .coloFace {
+      position: relative;
+      z-index: 2;
+    }
+  }
 
   @media only screen and (max-width: 1000px) {
     .coloFace {
