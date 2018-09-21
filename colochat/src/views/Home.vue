@@ -52,12 +52,13 @@ export default {
 
 <style lang="scss" scoped>
 $accent: hsl(340, 100%, 79%);
+$navHeight: 30px;
 
 .home {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 50px);
+  min-height: calc(100vh - $navHeight);
   background-image: url("../assets/bg.jpg");
   background-position: center;
   background-size: cover;
