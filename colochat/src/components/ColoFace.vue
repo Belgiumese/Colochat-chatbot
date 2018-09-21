@@ -1,16 +1,20 @@
 <template>
   <div class="coloFace">
-    <img 
+    <!-- <img 
       ref="image"
       :src="imgName" 
-      alt="Colo mascot">
+      alt="Colo mascot"> -->
+    <!-- <svgicon :name="imgName"/> -->
+    <div 
+      class="coloImage" 
+      :style="{ 'background-image': `url(${imgName})` }"/>
   </div>
 </template>
 
 <script>
-import ColoHappy from '../assets/colo_happy.png';
-import ColoSleepy from '../assets/colo_sleepy.png';
-import ColoStandard from '../assets/colo_standard.png';
+import ColoHappy from '../assets/colo_faces/colo_happy.js';
+import ColoSleepy from '../assets/colo_faces/colo_sleepy.js';
+import ColoStandard from '../assets/colo_faces/colo_standard.js';
 
 export default {
   // Contains any variables on the object
@@ -35,7 +39,6 @@ export default {
     },
 
     setEmotion(imgUrl) {
-      //const imgName = faces[emotion];
       if (imgUrl) {
         this.imgName = imgUrl;
       }
@@ -45,10 +48,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$height: 300px;
+$width: 400px;
+
 .coloFace {
-  img {
-    width: 400px;
-    height: 300px;
+  width: $width;
+  height: $height;
+  box-sizing: content-box;
+
+  .coloImage {
+    width: $width;
+    height: $height;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
   }
 }
 </style>
+
+<style>
+</style>
+
