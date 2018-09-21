@@ -5,6 +5,7 @@
       ref="messageBox"
       :is-colo-typing="isColoTyping"
       @response-choice="responseChoice"/>
+      
     <div id="typeBox">
       <input 
         type="text" 
@@ -190,11 +191,28 @@ export default {
 $accent2: rgb(241, 87, 138);
 $bgGrey: rgb(248, 249, 250);
 
+$arrowHeight: 30px;
+$arrowWidth: 40px;
+
 .hello {
   margin: 30px 10px;
+  margin-right: $arrowHeight;
   width: 600px;
   border-radius: 10px;
   background-color: $bgGrey;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: -$arrowHeight;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-top: $arrowHeight solid transparent;
+    border-bottom: $arrowHeight solid transparent;
+    border-left: $arrowWidth solid $bgGrey;
+  }
 
   #typeBox {
     border-top: 2px solid grey;
