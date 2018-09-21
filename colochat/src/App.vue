@@ -60,7 +60,7 @@
 <style lang="scss">
 #nav {
   background: white;
-  height: 50px;
+  height: 40px;
   font-family: "Averia Serif Libre", sans-serif;
   display: flex;
   align-items: center;
@@ -74,7 +74,7 @@
     color: #958781;
 
     &.router-link-exact-active {
-      color: #c43879;
+      color: #b83a75;
       font-weight: 600;
     }
   }

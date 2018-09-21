@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="chatBot">
     <message-box 
       :messages="messages" 
       ref="messageBox"
@@ -194,7 +194,7 @@ $bgGrey: rgb(248, 249, 250);
 $arrowHeight: 30px;
 $arrowWidth: 40px;
 
-.hello {
+.chatBot {
   margin: 30px 10px;
   margin-right: $arrowHeight;
   width: 600px;
@@ -205,7 +205,7 @@ $arrowWidth: 40px;
   &::after {
     content: "";
     position: absolute;
-    right: -$arrowHeight;
+    right: -$arrowWidth;
     top: 50%;
     width: 0;
     height: 0;

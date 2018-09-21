@@ -10,13 +10,17 @@ const slqRequest = axios.create({
 });
 
 const ID_SIZE = 10;
-const QUIZ_QUESTIONS = 5;
+const QUIZ_QUESTIONS = 3;
 
 const agentSettings = {
   projectId: 'newagent-9dde0',
   sessionId: 'test-session',
   languageCode: 'en-AU'
 };
+
+const sessionClient = new dialogflow.SessionsClient();
+
+process.env.DEBUG = 'dialogflow:debug';
 
 const slqLanguageSources = {
   Barunggam: { id: 'ec6accc5-07d9-44d3-bf6d-0b363a73f3ef', column: 'Barunggam' },
@@ -39,40 +43,37 @@ const slqLanguageSources = {
   Yuwibara: { id: '1a7f0c01-d27f-4865-be23-c2276655a529', column: 'Yuwibara' },
 }
 
-const sessionClient = new dialogflow.SessionsClient();
-//const sessionPath = sessionClient.sessionPath(agentSettings.projectId, agentSettings.sessionId);
+const MSG_OPTIONS = {
+  QUIZ_CORRECT: [
+    "That's correct, well done!",
+    "You're right! Good job!",
+    "That's the right answer, good job!",
+    "Nice work! That was right!"
+  ],
+  QUIZ_INCORRECT: [
+    "Sorry, the answer is actually ${this.answer}",
+    "Almost there! The correct answer was ${this.answer}",
+    "Unfortunately that's not correct, the answer was ${this.answer}",
+  ],
+  QUIZ_QUESTION: [
+    "What does ${this.aboriginalWord} mean?",
+    "What is the translation of ${this.aboriginalWord}?",
+  ]
+};
 
-process.env.DEBUG = 'dialogflow:debug';
+function evalTemplate(str, templateVars) {
+  return new Function(`return \`${str}\`;`).call(templateVars);
+}
 
-// Given a language and a word to translate, get the translation and return it
-// function getTranslation(language, word) {
+function getArrayRandEntry(arr) {
+  const randomIndex = getRandom(0, arr.length - 1);
+  return arr[randomIndex];
+}
 
-//   const languageId = slqLanguageSources[language];
-//   if (!languageId) {
-//     // If this language isn't in the list, reject
-//     return Promise.reject(`Sorry, I'm still learning and don't know that language yet :(`);
-//   }
-
-//   const query = encodeURI(`SELECT * FROM "${languageId}" WHERE LOWER("English") LIKE LOWER('${word}')`);
-//   const url = `https://data.gov.au/api/3/action/datastore_search_sql?sql=${query}`;
-
-//   return axios.get(url)
-//     .then(res => {
-//       // TODO: Do something to pick one if there's more than one result
-//       const results = res.data.result.records;
-
-//       if (results.length === 0) {
-//         // No response
-//         return Promise.reject('Sorry, I don\'t know the translation for that word yet!');
-//       } else {
-//         // For now, just pick the first. Implement fuzzy search later
-//         return results[0][language];
-//       }
-//     }, err => {
-//       console.log(`COLO ERR: ${err}`);
-//       return Promise.reject('Something went wrong and I got confused, please try asking again!');
-//     });
-// }
+function getRandomResponse(msgOption, templateVars) {
+  const chosenOption = getArrayRandEntry(MSG_OPTIONS[msgOption]);
+  return evalTemplate(chosenOption, templateVars);
+}
 
 function getTranslation(language, word) {
   return getSlqData(language,
@@ -248,7 +249,8 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     language = capitaliseText(formatText(language));
 
     return getQuizzes(language, QUIZ_QUESTIONS).then(quizzes => {
-      console.log(`Quizzes: ${JSON.stringify(quizzes)}`);
+      agent.add(`Okay! I'll ask you ${QUIZ_QUESTIONS} questions to test your knowledge.
+        You can quit at any time, just ask me to stop the quiz. Here we go!`);
       // Update the lifespan and the 5 words
       const context = agent.getContext('quiz_context');
       context.lifespan = 1;
@@ -256,11 +258,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       agent.setContext(context);
 
       const options = quizzes[0].fakeOptions;
-      // const options = quizzes[0].fakeOptions.slice(0);
-      // const randomIndex = getRandom(0, options.length - 1);
-      // options.splice(randomIndex, 0, quizzes[0].english);
-
-      console.log(`OPTIONS: ${JSON.stringify(options)}`);
       askQuizQuestion(agent, quizzes[0].aboriginal, options, 0, QUIZ_QUESTIONS);
 
       return agent;
@@ -284,20 +281,29 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     console.log(`User answer: '${userAnswer}', correct: '${correctAnswer}'`)
 
     if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
-      agent.add('correct answer!');
+      agent.add(getRandomResponse('QUIZ_CORRECT'));
       context.parameters.score++;
     } else {
-      agent.add(`Sorry, the correct answer is ${correctAnswer}`);
+      agent.add(getRandomResponse('QUIZ_INCORRECT', { answer: correctAnswer }));
     }
 
     progress++;
     const currentQuiz = quizzes[progress];
 
     if (progress === QUIZ_QUESTIONS) {
-      agent.add(`You have scored ${context.parameters.score} out of 
-        ${QUIZ_QUESTIONS} on the quiz!`);
+      let scoreMsg;
+      const score = context.parameters.score;
+
+      if (score < 2) {
+        scoreMsg = `You got ${score} out of ${QUIZ_QUESTIONS} correct. Keep practicing,
+          you're on the right track!`;
+      } else {
+        scoreMsg = `You got ${context.parameters.score} out of 
+        ${QUIZ_QUESTIONS} on the quiz! That's amazing, well done!`;
+      }
+
+      agent.add(scoreMsg);
       agent.clearOutgoingContexts();
-      //agent.setFollowupEvent('quiz_end_event');
     } else {
       context.parameters.current_progress = progress;
       context.lifespan = 1;
@@ -315,7 +321,8 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 });
 
 function askQuizQuestion(agent, aboriginalWord, options, progress, totalAmount) {
-  agent.add(`(${progress + 1}/${totalAmount}) What does ${aboriginalWord} mean?`);
+  const questionString = getRandomResponse('QUIZ_QUESTION', { aboriginalWord: aboriginalWord });
+  agent.add(`Question ${progress + 1} out of ${totalAmount}: ${questionString}`);
   addAllOptions(agent, options);
 }
 
