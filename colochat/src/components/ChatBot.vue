@@ -32,7 +32,7 @@ import '../assets/icons-compiled/play-solid.js';
 const COLO_TYPE_DELAY = 500;
 
 const INITIAL_MESSAGE = {
-  MESSAGE: ` it’s Colo!! 🐨🍃 You can chat to me here and ask me to translate or quiz you on a bunch of Aboriginal languages. 😮
+  MESSAGE: ` it’s Colo!! 🐨🍃 You can chat to me here and ask me to translate or quiz you on body parts in a bunch of Aboriginal languages. 😮
   Also, don't forget to check out the HELP page if you get a little stuck. 😖`,
   MAX_DELAY: 2000,
   MIN_DELAY: 1000

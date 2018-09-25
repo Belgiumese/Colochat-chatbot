@@ -27,7 +27,7 @@
         id="faq2">
         <h3>2 What can Colo do?</h3>
         <p id="faqLanguages">
-          You can chat with me about a range of topics. I can perform translations between English and 18 Aboriginal Languages which are:
+          You can chat with me about a range of topics and I can perform translations between English and 18 Aboriginal Languages which are:
           <br>
           <span class="faqCode">Barunggam</span>
           <span class="faqCode">Butchulla</span>
@@ -49,7 +49,26 @@
           <span class="faqCode">Yuwibara</span>
           <br>
           <br>
-          You can ask me questions about basic aboriginal related Australian history, and I can quiz you on words that you’ve learnt throughout our conversation.
+          At the moment, the only words I know are body parts.<br>
+          <br>
+          Here are examples of words I know:
+          <br>
+          <span class="faqCode">Arm</span>
+          <span class="faqCode">Belly</span>
+          <span class="faqCode">Chin</span>
+          <span class="faqCode">Ear</span>
+          <span class="faqCode">Elbow</span>
+          <span class="faqCode">Eyes</span>
+          <span class="faqCode">Face</span>
+          <span class="faqCode">Heart</span>
+          <span class="faqCode">Mouth</span>
+          <span class="faqCode">Teeth</span>
+          <span class="faqCode">Thumb</span>
+          <span class="faqCode">Tongue</span>
+          <span class="faqCode">Wrist</span>
+          <br>
+          <br>
+          You can also ask me questions about basic aboriginal related Australian history, and I can quiz you on words that you’ve learnt throughout our conversation.
         </p>
       </div>
       <div 
@@ -69,17 +88,20 @@
           </p>
           <h4>Translations</h4>
           <p>
-            I can translate basic words from a number of Aboriginal languages.
+            I can translate body parts from a number of Aboriginal languages.
             <br><br>An example of how you can ask me to translate is:
           </p>
           <p class="faqCode">
-            'Can you translate the word arm from Wakka-wakka'
+            'Can you translate the word arm?'
           </p>
           <p>
-            Make sure you mention which language you'd like me to translate from. If you're not sure what languages I know you can just ask me with something like:
+            If you're not sure what languages I know you can just ask me with something like:
           </p>
           <p class="faqCode">
             'What languages do you know Colo?'
+          </p>
+          <p>
+            I don't always know the translation in all 18 languages, so if I can't translate a word for you maybe try choosing a different language.
           </p>
           <h4>Basic Aboriginal Facts</h4>
           <p>
@@ -91,12 +113,20 @@
           </p>
           <h4>Quiz Me Colo</h4>
           <p>
-            To help you learn I can quiz you on a few different topics based on the words I know.
-            <br>The possible quiz topics are 'body parts' and 'greetings'.
+            To help you learn I can quiz you on the Aboriginal languages I know.
+            <br>The words will be on body parts.
             <br><br>An example of how you can ask me to quiz you is:
           </p>
           <p class="faqCode">
             'Colo, can you quiz me on body parts in Wakka-wakka?'
+          </p>
+          <h4>Tell me a joke</h4>
+          <p>
+            I can tell you super funny jokes! Well I think they're funny but my friends don't agree...
+            <br><br>You can ask for a joke with something like:
+          </p>
+          <p class="faqCode">
+            'Tell me a joke, Colo'
           </p>
         </div>
       </div>
