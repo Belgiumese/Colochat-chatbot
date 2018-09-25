@@ -94,6 +94,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$accent: hsl(340, 100%, 79%);
+
 .meetColo {
   position: absolute;
   top: 0;
@@ -107,6 +109,9 @@ export default {
   z-index: 10;
   font-family: "Open Sans", sans-serif;
   font-size: 25px;
+  background-image: url("../assets/intro_bg.jpg");
+  background-position: center;
+  background-size: cover;
 
   .content {
     width: 90%;
@@ -127,13 +132,21 @@ export default {
       }
 
       button {
-        background: #f7a7d3;
-        padding: 10px;
-        border: 2px solid #dc1482;
-        font-weight: 600;
+        display: inline-block;
+        border: 5px solid $accent;
+        padding: 7px 20px;
+        border-radius: 4px;
+        margin: 20px 0;
+        color: $accent;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.5s ease;
         font-size: 30px;
+        background: white;
 
         &:hover {
+          background-color: $accent;
+          color: white;
           cursor: pointer;
         }
       }

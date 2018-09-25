@@ -153,11 +153,12 @@ $accent: hsl(340, 100%, 79%);
         font-weight: bold;
         text-decoration: none;
         transition: all 0.5s ease;
-      }
 
-      .info-btn:hover {
-        background-color: $accent;
-        color: white;
+        &:hover {
+          background-color: $accent;
+          color: white;
+          cursor: pointer;
+        }
       }
     }
   }
