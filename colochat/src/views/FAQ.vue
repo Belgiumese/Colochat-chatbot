@@ -8,8 +8,7 @@
           <h2><span class="faqNumber">1</span><a href="#faq1">Who is Colo?</a></h2>     
           <h2><span class="faqNumber">2</span><a href="#faq2">What can Colo do?</a></h2>      
           <h2><span class="faqNumber">3</span><a href="#faq3">How can I use Colochat?</a></h2>      
-          <h2><span class="faqNumber">4</span><a href="#faq4">Can Colo Respond to All of My Questions?</a></h2>     
-          <h2><span class="faqNumber">5</span><a href="#faq5">Who is Colochat for?</a></h2>
+          <h2><span class="faqNumber">4</span><a href="#faq4">Can Colo Respond to All of My Questions?</a></h2>
         </div>
       </div>
       <div 
@@ -134,14 +133,6 @@
         <h3>4 Can Colo Respond to All of My Questions?</h3>
         <p>
           Although I'll try my best to answer your questions and translate for you, I'm still learning. Please be patient with me! If I can't answer your question it might help if you try to rephrase it differently for me.
-        </p>
-      </div>
-      <div 
-        class="faqSection" 
-        id="faq5">
-        <h3>5 Who is Colochat for?</h3>
-        <p>
-          ColoChat can be used by anyone, however, it is specifically targeted towards students in grades 5 - 9. It is intended to be a tool distributed by teachers within in their classrooms.
         </p>
       </div>
     </div>   
