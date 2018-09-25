@@ -120,7 +120,7 @@
           </p>
           <h4>Tell me a joke</h4>
           <p>
-            I can tell you super funny jokes! Well I think they're funny but my friends don't agree...
+            I can tell you super funny jokes! Well I think they are at least.🤣
             <br><br>You can ask for a joke with something like:
           </p>
           <p class="faqCode">
