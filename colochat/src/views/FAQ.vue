@@ -48,7 +48,7 @@
           <span class="faqCode">Yuwibara</span>
           <br>
           <br>
-          At the moment, the only words I know are body parts. Here are examples of words I know:
+          At the moment, the only words I know are body parts. Here are just a few of words I know:
           <br>
           <span class="faqCode">Arm</span>
           <span class="faqCode">Belly</span>
