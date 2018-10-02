@@ -4,7 +4,7 @@
       v-if="showPopup" 
       @exit="closePopup"/>
     <chat-bot ref="chatBot"/>
-    <div class="faceContainer">
+    <div class="faceContainer hideOnMobile">
       <div class="faceCircle"/>
       <colo-face class="coloFace"/>
     </div>
@@ -89,7 +89,7 @@ $accent: hsl(340, 100%, 79%);
   }
 
   @media only screen and (max-width: 1000px) {
-    .coloFace {
+    .hideOnMobile {
       display: none;
     }
   }

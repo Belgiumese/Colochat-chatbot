@@ -8,7 +8,7 @@
 
           <button 
             v-if="phase == PHASE.SLEEPING"
-            class="wakeUp" 
+            class="wakeUp accentBtn" 
             @click="wakeUpClick">Wake up, Colo!</button>
 
           <div 
@@ -23,6 +23,7 @@
               @keyup.enter="enterName">
 
             <button 
+              class="submit"
               @click="enterName" 
               :disabled="!nameText">Submit</button>
           </div>
@@ -30,8 +31,12 @@
           <div 
             v-if="phase == PHASE.GREETING" 
             class="greeting">
-            <p>It's great to meet you {{ nameText }}! Come on in!</p>
-            <button @click="close">Start</button>
+            <p>It's great to meet you {{ nameText }}! I can't wait to start chatting with you!</p>
+            <button 
+              class="accentBtn"
+              @click="close">
+              Start!
+            </button>
           </div>
 
         </div>
@@ -133,16 +138,14 @@ $accent: hsl(340, 100%, 79%);
 
       button {
         display: inline-block;
-        border: 5px solid $accent;
-        padding: 7px 20px;
-        border-radius: 4px;
         margin: 20px 0;
         color: $accent;
         font-weight: bold;
         text-decoration: none;
-        transition: all 0.5s ease;
-        font-size: 30px;
+        transition: all 0.3s ease;
         background: white;
+        padding: 8px 20px;
+        border: 3px solid $accent;
 
         &:hover {
           background-color: $accent;
@@ -151,9 +154,20 @@ $accent: hsl(340, 100%, 79%);
         }
       }
 
+      .accentBtn {
+        border: 4px solid $accent;
+        border-radius: 12px;
+        font-size: 30px;
+      }
+
       .enterName {
         input {
           font-size: 20px;
+        }
+
+        .submit {
+          font-size: 20px;
+          border-radius: 7px;
         }
       }
 
