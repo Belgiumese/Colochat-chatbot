@@ -21,56 +21,74 @@
         <p>
           If you would like to learn more about  initiatives to revive Aboriginal language, head on to the following links:
         </p>
-        <h4>My Grandmother’s Lingo</h4>
-        <p>
-          An innovative online documentary combines voice-activated gaming technology with unique animations to unlock chapters to the story of one woman’s fight to save her endangered Indigenous language. Discover about her story below.
-        </p>
-        <a 
-          class="info-btn" 
-          target="_blank"
-          href="https://www.sbs.com.au/mygrandmotherslingo/">
-          Go to Site
-        </a>
-        <h4>Gidarjil Development Corporation</h4>
-        <p>
-          The Central Queensland Language Centre supports local indigenous language communities with the revitalisation and maintenance of their language, through a range of language programs such as resource development, language learning, language worker training, workshop delivery and community learning. To learn more about their current initiatives, click on their link below.
-        </p>
-        <a 
-          class="info-btn" 
-          target="_blank"
-          href="http://www.gidarjil.com.au/what-we-do/language">
-          Go to Site
-        </a>
-        <h4>North Queensland Regional Aboriginal Corporation Languages Centre (NQRACLC)</h4>
-        <p>
-          NQRACLC helps facilitate workshops, lessons, publications, and revival of Aboriginal languages in the region they cover. To find out more about the languages that is covered by NQRACLC, head over to their website.
-        </p>
-        <a 
-          class="info-btn" 
-          target="_blank"
-          href="http://www.nqraclc.com.au/">
-          Go to Site
-        </a>
-        <h4>Nalingu Aboriginal Corporation</h4>
-        <p>
-          Nalingu Aboriginal Corporation is responsible for the research, recording and preservation of the languages around the Maranoa and Ballone Rivers in Central Queensland. Through the assistance of Nalingu Corporation, a Gunngari Language Program is being run for the students in Mitchell State School. To find out more about the program, look no further and click on the link below.
-        </p>
-        <a 
-          class="info-btn" 
-          target="_blank"
-          href="http://ourlanguages.org.au/namex/nalingu-aboriginal-corporation-2/">
-          Go to Site
-        </a>
-        <h4>Yugambeh Museum Language and Heritage Research Centre</h4>
-        <p>
-          Yugambeh Museum, Language and Heritage Research Centre helps in recording and promoting the traditional knowledge of their region, especially the Yugambeh language which was spoken throughout South East Queensland. To learn more about their community, head over to their website now.
-        </p>
-        <a 
-          class="info-btn" 
-          target="_blank"
-          href="https://www.yugambeh.com/">
-          Go to Site
-        </a>
+        <div class="resource_img">
+          <img 
+            src="../assets/resource_img/lingo.jpg">
+        </div>
+        <div class="resource">
+          <h4>My Grandmother’s Lingo</h4>
+          <p>
+            An innovative online documentary combines voice-activated gaming technology with unique animations to unlock chapters to the story of one woman’s fight to save her endangered Indigenous language. Discover about her story below.
+          </p>
+          <a 
+            class="info-btn" 
+            target="_blank"
+            href="https://www.sbs.com.au/mygrandmotherslingo/">
+            Go to Site
+          </a>
+        </div>
+        <div class="resource">
+          <h4>Gidarjil Development Corporation</h4>
+          <p>
+            The Central Queensland Language Centre supports local indigenous language communities with the revitalisation and maintenance of their language, through a range of language programs such as resource development, language learning, language worker training, workshop delivery and community learning. To learn more about their current initiatives, click on their link below.
+          </p>
+          <a 
+            class="info-btn" 
+            target="_blank"
+            href="http://www.gidarjil.com.au/what-we-do/language">
+            Go to Site
+          </a>
+        </div>
+        <div class="resource">
+          <h4>North Queensland Regional Aboriginal Corporation Languages Centre (NQRACLC)</h4>
+          <p>
+            NQRACLC helps facilitate workshops, lessons, publications, and revival of Aboriginal languages in the region they cover. To find out more about the languages that is covered by NQRACLC, head over to their website.
+          </p>
+          <a 
+            class="info-btn" 
+            target="_blank"
+            href="http://www.nqraclc.com.au/">
+            Go to Site
+          </a>
+        </div>        
+        <div class="resource_img">
+          <img 
+            src="../assets/resource_img/our_languages.jpg">
+        </div>
+        <div class="resource">
+          <h4>Nalingu Aboriginal Corporation</h4>
+          <p>
+            Nalingu Aboriginal Corporation is responsible for the research, recording and preservation of the languages around the Maranoa and Ballone Rivers in Central Queensland. Through the assistance of Nalingu Corporation, a Gunngari Language Program is being run for the students in Mitchell State School. To find out more about the program, look no further and click on the link below.
+          </p>
+          <a 
+            class="info-btn" 
+            target="_blank"
+            href="http://ourlanguages.org.au/namex/nalingu-aboriginal-corporation-2/">
+            Go to Site
+          </a>
+        </div>
+        <div class="resource">
+          <h4>Yugambeh Museum Language and Heritage Research Centre</h4>
+          <p>
+            Yugambeh Museum, Language and Heritage Research Centre helps in recording and promoting the traditional knowledge of their region, especially the Yugambeh language which was spoken throughout South East Queensland. To learn more about their community, head over to their website now.
+          </p>
+          <a 
+            class="info-btn" 
+            target="_blank"
+            href="https://www.yugambeh.com/">
+            Go to Site
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -128,9 +146,9 @@ $accent: hsl(340, 100%, 79%);
 
     .infoSection {
       padding: 30px 50px 10px 50px;
-      text-align: left;
       max-width: 900px;
       margin: auto;
+      text-align: left;
 
       h3 {
         color: $accent;
@@ -140,7 +158,19 @@ $accent: hsl(340, 100%, 79%);
 
       h4 {
         font-size: 1.3em;
-        margin: 30px 0 10px 0;
+        margin: 15px 0 10px 0;
+      }
+
+      .resource_img {
+        text-align: center;
+
+        img {
+          width: auto;
+          max-width: 80%;
+          height: auto;
+          max-height: 30vh;
+          margin: 30px auto 15px auto;
+        }
       }
 
       .info-btn {
@@ -160,6 +190,16 @@ $accent: hsl(340, 100%, 79%);
           cursor: pointer;
         }
       }
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .furtherInfo {
+    padding: 5%;
+
+    .infoSection {
+      padding: 5% !important;
     }
   }
 }

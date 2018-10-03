@@ -100,14 +100,6 @@
           <p>
             I don't always know the translation in all 18 languages, so if I can't translate a word for you maybe try choosing a different language.
           </p>
-          <h4>Basic Aboriginal Facts</h4>
-          <p>
-            I've learnt a little bit about basic Aboriginal history. So feel free to ask me a question and I'll try my best to answer.
-            <br><br>An example of a question you can ask me is:
-          </p>
-          <p class="faqCode">
-            'What are the colours on the Aboriginal flag?'
-          </p>
           <h4>Quiz Me Colo</h4>
           <p>
             To help you learn I can quiz you on the Aboriginal languages I know.
@@ -263,6 +255,21 @@ $accent: hsl(340, 100%, 79%);
         .faqCode {
           margin: 5px;
         }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .faq {
+    padding: 5%;
+
+    #faqTop,
+    .faqSection {
+      padding: 5% !important;
+
+      #faqExamples {
+        margin: 0 !important;
       }
     }
   }
