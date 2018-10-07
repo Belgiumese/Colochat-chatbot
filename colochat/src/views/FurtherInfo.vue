@@ -199,6 +199,10 @@ $accent: hsl(340, 100%, 79%);
     background: white;
     padding: 5%;
 
+    #infoTop {
+      margin-bottom: 10px;
+    }
+
     .infoContainer {
       padding-top: 0 !important;
     }
