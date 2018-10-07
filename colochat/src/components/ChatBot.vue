@@ -206,7 +206,7 @@ $arrowWidth: 40px;
     content: "";
     position: absolute;
     right: -$arrowWidth;
-    top: 50%;
+    top: 30%;
     width: 0;
     height: 0;
     border-top: $arrowHeight solid transparent;
