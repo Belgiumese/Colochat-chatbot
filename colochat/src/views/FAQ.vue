@@ -263,10 +263,18 @@ $accent: hsl(340, 100%, 79%);
 @media only screen and (max-width: 1000px) {
   .faq {
     padding: 5%;
+    background: white;
 
-    #faqTop,
+    .faqContainer {
+      padding-top: 0 !important;
+    }
+
+    #faqTop {
+      padding: 0 !important;
+    }
+
     .faqSection {
-      padding: 5% !important;
+      padding: 10px 0 5px 0 !important;
 
       #faqExamples {
         margin: 0 !important;

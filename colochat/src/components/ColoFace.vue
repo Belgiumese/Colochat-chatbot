@@ -48,8 +48,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$height: 300px;
-$width: 400px;
+$height: 180px;
+$width: 240px;
 
 .coloFace {
   width: $width;
@@ -57,11 +57,18 @@ $width: 400px;
   box-sizing: content-box;
 
   .coloImage {
-    width: $width;
-    height: $height;
+    width: inherit;
+    height: inherit;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
+  }
+}
+
+@media only screen and (min-width: 1001px) {
+  .coloFace {
+    width: 360px;
+    height: 240px;
   }
 }
 </style>

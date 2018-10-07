@@ -6,7 +6,7 @@
     <div id="nav">
       <router-link to="/">CHAT</router-link> |
       <router-link to="/faq">HELP</router-link> |
-      <router-link to="/info">MORE RESOURCES</router-link>
+      <router-link to="/info">RESOURCES</router-link>
     </div>
 
     <!-- The router view shows the entire page you're currently on -->
@@ -76,6 +76,14 @@
     &.router-link-exact-active {
       color: #b83a75;
       font-weight: 600;
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  #nav {
+    a {
+      font-size: 1em;
     }
   }
 }

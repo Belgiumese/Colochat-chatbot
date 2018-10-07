@@ -196,10 +196,15 @@ $accent: hsl(340, 100%, 79%);
 
 @media only screen and (max-width: 1000px) {
   .furtherInfo {
+    background: white;
     padding: 5%;
 
+    .infoContainer {
+      padding-top: 0 !important;
+    }
+
     .infoSection {
-      padding: 5% !important;
+      padding: 10px 0 5px 0 !important;
     }
   }
 }

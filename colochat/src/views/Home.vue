@@ -85,6 +85,8 @@ $accent: hsl(340, 100%, 79%);
     .coloFace {
       position: relative;
       z-index: 2;
+      width: 400px !important;
+      height: 300px !important;
     }
   }
 
