@@ -107,7 +107,7 @@
             <br><br>An example of how you can ask me to quiz you is:
           </p>
           <p class="faqCode">
-            'Colo, can you quiz me on body parts in Wakka-wakka?'
+            'Colo, can you quiz me on body parts in wakka-wakka?'
           </p>
           <h4>Tell me a joke</h4>
           <p>
@@ -154,7 +154,7 @@ $accent: hsl(340, 100%, 79%);
   position: relative;
   padding: 7vh 10vw;
   min-height: 100vh;
-  background: $accent;
+  background: url(../assets/leaves.png);
 
   p {
     font-size: 1.1em;

@@ -114,7 +114,7 @@ $accent: hsl(340, 100%, 79%);
   position: relative;
   padding: 7vh 10vw;
   min-height: 100vh;
-  background: $accent;
+  background: url(../assets/leaves.png);
 
   p {
     font-size: 1.1em;
