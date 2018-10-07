@@ -3,7 +3,7 @@
     <div class="infoContainer">
       <div id="infoTop">
         <colo-face class="colo-info margin-auto"/>
-        <h1>Info</h1>
+        <h1>Resources</h1>
         <h2>Find out more about Aboriginal language revival!</h2>
       </div>
       <div class="infoSection">
