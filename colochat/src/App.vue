@@ -86,6 +86,10 @@
       font-size: 1em;
     }
   }
+
+  p {
+    font-size: 1em !important;
+  }
 }
 </style>
 

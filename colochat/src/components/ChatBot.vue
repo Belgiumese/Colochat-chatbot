@@ -195,10 +195,7 @@ $arrowHeight: 30px;
 $arrowWidth: 40px;
 
 .chatBot {
-  margin: 30px 10px;
-  margin-right: $arrowHeight;
-  width: 600px;
-  border-radius: 10px;
+  width: 100vw;
   background-color: $bgGrey;
   position: relative;
 
@@ -215,6 +212,9 @@ $arrowWidth: 40px;
   }
 
   #typeBox {
+    position: relative;
+    box-sizing: border-box;
+    background: #f8f9fa;
     border-top: 2px solid grey;
     padding: 5px;
     display: flex;
@@ -245,6 +245,29 @@ $arrowWidth: 40px;
         height: 20px;
       }
     }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .chatBot {
+    height: calc(100vh - 40px);
+
+    &::after {
+      display: none;
+    }
+
+    #typebox {
+      max-height: calc((100vh - 40px) * 0.1);
+    }
+  }
+}
+
+@media only screen and (min-width: 1001px) {
+  .chatBot {
+    margin: 30px 10px;
+    border-radius: 10px;
+    margin-right: $arrowHeight;
+    width: 600px;
   }
 }
 </style>

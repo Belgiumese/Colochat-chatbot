@@ -115,12 +115,23 @@ export default {
 
 <style lang="scss" scoped>
 .messageBox {
-  width: 600px;
-  height: 550px;
   margin: 0 auto;
   padding: 15px;
   overflow-y: auto;
   position: relative;
+}
+
+@media only screen and (max-width: 1000px) {
+  .messageBox {
+    height: calc((100vh - 40px) * 0.9);
+  }
+}
+
+@media only screen and (min-width: 1001px) {
+  .messageBox {
+    width: 600px;
+    height: 550px;
+  }
 }
 
 .messages-enter-active,

@@ -73,7 +73,7 @@ export default {
     max-width: 55%;
     margin: 7px 0;
     background-color: rgb(136, 129, 145);
-    font-size: 16px;
+    font-size: 1.1em;
     font-family: "Open Sans", sans-serif;
 
     .messageText {
@@ -90,13 +90,26 @@ export default {
       border: 1px solid grey;
       border-radius: 15px;
       background-color: transparent;
-      font-size: 16px;
+      font-size: 1.1em;
       outline: none;
       transition: background-color 0.15s ease;
 
       &:hover {
         cursor: pointer;
         background-color: rgb(232, 233, 238);
+      }
+    }
+  }
+
+  @media only screen and (max-width: 1000px) {
+    .messageContainer {
+      font-size: 1em !important;
+      max-width: 80%;
+    }
+
+    .responseContainer {
+      .responseOption {
+        font-size: 1em !important;
       }
     }
   }

@@ -12,7 +12,7 @@
         <colo-face class="coloFace"/>
       </div>
 
-      <div class="suggestions">
+      <div class="suggestions hideOnMobile">
         <h3>Not sure what to say? Try:</h3>
         <div 
           @click="suggestionClick" 
