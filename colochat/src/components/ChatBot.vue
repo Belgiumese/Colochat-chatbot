@@ -212,7 +212,6 @@ $arrowWidth: 40px;
   }
 
   #typeBox {
-    position: relative;
     box-sizing: border-box;
     background: #f8f9fa;
     border-top: 2px solid grey;
@@ -250,9 +249,17 @@ $arrowWidth: 40px;
 
 @media only screen and (max-width: 1000px) {
   .chatBot {
+    height: calc(100vh - 40px);
+
     &::after {
       display: none;
     }
+  }
+
+  #typebox {
+    max-height: calc((100vh - 40px) * 0.1);
+    position: sticky !important;
+    bottom: 0;
   }
 }
 
@@ -262,6 +269,10 @@ $arrowWidth: 40px;
     border-radius: 10px;
     margin-right: $arrowHeight;
     width: 600px;
+
+    #typeBox {
+      position: relative;
+    }
   }
 }
 </style>

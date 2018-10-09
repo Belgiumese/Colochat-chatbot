@@ -201,6 +201,10 @@ $accent: hsl(340, 100%, 79%);
 
     #infoTop {
       margin-bottom: 10px;
+
+      h1 {
+        font-size: 3em;
+      }
     }
 
     .infoContainer {
@@ -208,7 +212,16 @@ $accent: hsl(340, 100%, 79%);
     }
 
     .infoSection {
-      padding: 10px 0 5px 0 !important;
+      padding: 30px 0 5px 0 !important;
+
+      h2 {
+        font-size: 1.5em;
+      }
+
+      h3 {
+        font-size: 1.3em;
+        text-align: center;
+      }
     }
   }
 }

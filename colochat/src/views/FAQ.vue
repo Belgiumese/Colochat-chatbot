@@ -271,10 +271,23 @@ $accent: hsl(340, 100%, 79%);
 
     #faqTop {
       padding: 0 !important;
+
+      h1 {
+        font-size: 3em;
+      }
     }
 
     .faqSection {
       padding: 10px 0 5px 0 !important;
+
+      h2 {
+        font-size: 1.5em;
+      }
+
+      h3 {
+        font-size: 1.3em;
+        text-align: center;
+      }
 
       #faqExamples {
         margin: 0 !important;
