@@ -33,7 +33,7 @@
 import Vue from 'vue';
 import Message from './Message';
 
-import TWEEN from '@tweenjs/tween.js';
+import Animate from '../services/Animate';
 import PerfectScrollBar from 'perfect-scrollbar';
 import '../../node_modules/perfect-scrollbar/css/perfect-scrollbar.css';
 
@@ -72,19 +72,8 @@ export default {
         const newScroll = mBox.scrollHeight - mBox.clientHeight;
 
         if (newScroll > mBox.scrollTop) {
-          let scrollPos = { pos: mBox.scrollTop };
-
-          this.scrollAnimateCount++;
-          requestAnimationFrame(this.animate);
-
-          new TWEEN.Tween(scrollPos)
-            .to({ pos: newScroll }, 100)
-            .easing(TWEEN.Easing.Quadratic.Out)
-            .onUpdate(() => {
-              mBox.scrollTop = scrollPos.pos;
-            })
-            .onComplete(() => this.scrollAnimateCount--)
-            .start();
+          const easing = Animate.easing.Quadratic.Out;
+          Animate.smoothScroll(mBox, newScroll, easing, 100);
         }
       });
     },
@@ -96,13 +85,6 @@ export default {
 
     addOrRemoveScrollbar() {
       this.scrollBar.update();
-    },
-
-    animate(time) {
-      TWEEN.update(time);
-      if (this.scrollAnimateCount) {
-        requestAnimationFrame(this.animate);
-      }
     }
   },
 

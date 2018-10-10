@@ -5,10 +5,18 @@
         <colo-face ref="coloFace"/>
         <div>
           <h1>Help</h1>
-          <h2><span class="faqNumber">1</span><a href="#faq1">Who is Colo?</a></h2>     
-          <h2><span class="faqNumber">2</span><a href="#faq2">What can Colo do?</a></h2>      
-          <h2><span class="faqNumber">3</span><a href="#faq3">How can I use Colochat?</a></h2>      
-          <h2><span class="faqNumber">4</span><a href="#faq4">Can Colo Respond to All of My Questions?</a></h2>
+          <h2><span class="faqNumber">1</span><a 
+            href="" 
+            @click.prevent="scrollTo('#faq1')">Who is Colo?</a></h2>     
+          <h2><span class="faqNumber">2</span><a 
+            href="" 
+            @click.prevent="scrollTo('#faq2')">What can Colo do?</a></h2>      
+          <h2><span class="faqNumber">3</span><a 
+            href="" 
+            @click.prevent="scrollTo('#faq3')">How can I use Colochat?</a></h2>      
+          <h2><span class="faqNumber">4</span><a 
+            href="" 
+            @click.prevent="scrollTo('#faq4')">Can Colo Respond to All of My Questions?</a></h2>
         </div>
       </div>
       <div 
@@ -142,6 +150,19 @@ export default {
 
   mounted() {
     this.$refs.coloFace.setStandard();
+  },
+
+  methods: {
+    scrollTo(elemName) {
+      const elem = document.querySelector(elemName);
+      const elemPos = elem.getBoundingClientRect();
+      
+      window.scrollTo({
+        top: elemPos.top,
+        left: elemPos.left,
+        behavior: 'smooth'
+      });
+    }
   }
 };
 </script>
