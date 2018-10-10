@@ -2,6 +2,45 @@
   <transition name="appear">
     <div class="meetColo">
       <div class="content">
+      
+        <div
+          class="enterName1"
+          v-if="phase == PHASE.ENTER_NAME">
+          <p>Hi! I'm Colo, who are you?</p>
+        </div>
+
+        <div 
+          class="greeting1"
+          v-if="phase == PHASE.GREETING">
+          <p>It's great to meet you {{ nameText }}! I'm Colo the koala chatbot, here to help you learn a bit about Aboriginal Languages from 
+          Queensland. Are you familiar with using ColoChat?</p>
+        </div>
+
+        <div 
+          class="welcome1"
+          v-if="phase == PHASE.WELCOME">
+          <p>Welcome to Colochat! Colochat is a fun and interactive way to learn about Aboriginal languages. Here you can chat with me, ask 
+          me to translate for you and ask me to quiz you.</p>
+        </div>
+
+        <div 
+          class="features1"
+          v-if="phase == PHASE.FEATURES">
+          <p>At the moment, I know the translations for a bunch of different body parts from 18 Aboriginal languages!  Before we start chatting,
+          here are some examples of questions you can ask me:</p>
+          <ul>
+            <li>'How are you today, Colo?'</li>
+            <li>'What languages do you know Colo?'</li>
+            <li>'Can you translate the worm arm?'</li>
+            <li>'Colo, can you quiz me on body parts in Wakka-wakka?'</li>
+          </ul>
+        </div>
+
+        <div 
+          class="end1"
+          v-if="phase == PHASE.END">
+          <p>Lastly, when you’re chatting to me, don’t worry too much because you can just chat naturally to me. 😊  Okay, now let’s start!!</p>
+        </div>
 
         <colo-face ref="coloFace"/>
         <div class="inputArea">
@@ -31,12 +70,36 @@
           <div 
             v-if="phase == PHASE.GREETING" 
             class="greeting">
-            <p>It's great to meet you {{ nameText }}! I can't wait to start chatting with you!</p>
             <button 
               class="accentBtn"
-              @click="close">
-              Start!
-            </button>
+              @click="toEnd">Yes</button>
+            <button
+              class="accentBtn"
+              @click="toWelcome">No</button>
+          </div>
+          
+          <div 
+            v-if="phase == PHASE.WELCOME" 
+            class="welcome">
+            <button 
+              class="accentBtn"
+              @click="toFeatures">Next</button>
+          </div>
+
+          <div 
+            v-if="phase == PHASE.FEATURES" 
+            class="features">
+            <button 
+              class="accentBtn"
+              @click="toEnd">Next</button>
+          </div>
+
+          <div 
+            v-if="phase == PHASE.END" 
+            class="end">
+            <button 
+              class="accentBtn"
+              @click="close">Start!</button>
           </div>
 
         </div>
@@ -65,7 +128,10 @@ export default {
         SLEEPING: 0,
         WAKING_UP: 1,
         ENTER_NAME: 2,
-        GREETING: 3
+        GREETING: 3,
+        WELCOME: 4,
+        FEATURES: 5,
+        END: 6
       },
       phase: 0,
       nameText: ''
@@ -87,14 +153,29 @@ export default {
       }
     },
 
+    toWelcome(){
+      this.phase = this.PHASE.WELCOME;
+      this.$refs.coloFace.setStandard();
+    },
+
+    toFeatures(){
+      this.phase = this.PHASE.FEATURES;
+      this.$refs.coloFace.setHappy();
+    },
+
+    toEnd(){
+      this.phase = this.PHASE.END;
+      this.$refs.coloFace.setStandard();
+    },
+
     close() {
       this.$emit('exit');
     }
   },
 
-  mounted() {
-    this.$refs.coloFace.setSleepy();
-  }
+  //mounted() {
+  // this.$refs.coloFace.setSleepy();
+  //}
 };
 </script>
 
@@ -125,6 +206,53 @@ $accent: hsl(340, 100%, 79%);
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
+    .enterName1 {
+      position: relative;
+      background: white;
+      border-radius: 0.4em;
+      border: 2px solid #6fa2fe;
+      margin: 0 auto;
+      padding: 0.4em;
+    }
+
+    .greeting1 {
+      position: relative;
+      background: white;
+      border-radius: 0.4em;
+      border: 2px solid #6fa2fe;
+      margin: 0 auto;
+      padding: 0.4em;
+    }
+
+    .welcome1 {
+      position: relative;
+      background: white;
+      border-radius: 0.4em;
+      border: 2px solid #6fa2fe;
+      margin: 0 auto;
+      padding: 0.4em;
+    }
+
+    .features1 {
+      position: relative;
+      background: white;
+      border-radius: 0.4em;
+      border: 2px solid #6fa2fe;
+      margin: 0 auto;
+      padding: 0.4em;
+      font-size: 20px;
+      list-style-position: inside;
+    }
+
+    .end1 {
+      position: relative;
+      background: white;
+      border-radius: 0.4em;
+      border: 2px solid #6fa2fe;
+      margin: 0 auto;
+      padding: 0.4em;
+    }
 
     .inputArea {
       margin-top: 30px;
@@ -172,6 +300,26 @@ $accent: hsl(340, 100%, 79%);
       }
 
       .greeting {
+        button {
+          margin-top: 20px;
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+      }
+
+      .welcome {
+        button {
+          margin-top: 20px;
+        }
+      }
+
+      .features {
+        button {
+          margin-top: 20px;
+        }
+      }
+
+      .end {
         button {
           margin-top: 20px;
         }
