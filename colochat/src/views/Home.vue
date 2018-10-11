@@ -12,33 +12,27 @@
         <colo-face class="coloFace"/>
       </div>
 
-      <div class="suggestions hideOnMobile">
-        <h3>Not sure what to say? Try:</h3>
-        <div 
-          @click="suggestionClick" 
-          class="suggestOptions"
-          ref="suggestionList">
-          <button>What is the word for arm in Turubal?</button>
-          <button>Tell me a joke!</button>
-          <button>Can you give me a quiz in wakka-wakka?</button>
-        </div>
-      </div>
+      <suggestions 
+        @clicked="suggestionClick" 
+        class="hideOnMobile"/>
     </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import ChatBot from '../components/ChatBot.vue';
 import ColoFace from '../components/ColoFace.vue';
 import MeetColo from '../components/MeetColo.vue';
+import Suggestions from '../components/Suggestions.vue';
 
 export default {
   name: 'Home',
+
   components: {
     'chat-bot': ChatBot,
     'colo-face': ColoFace,
-    'meet-colo': MeetColo
+    'meet-colo': MeetColo,
+    'suggestions': Suggestions
   },
 
   data() {
@@ -54,13 +48,8 @@ export default {
       this.$refs.chatBot.start();
     },
 
-    suggestionClick(event) {
-      const elem = event.srcElement;
-      if (elem.parentNode == this.$refs.suggestionList) {
-        // This is a child and not the element itself
-        console.log(elem.innerText);
-        this.$refs.chatBot.submitMessage(elem.innerText);
-      }
+    suggestionClick(text) {
+      this.$refs.chatBot.submitMessage(text);
     }
   },
 
@@ -93,34 +82,6 @@ $accent: hsl(340, 100%, 79%);
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    .suggestions {
-      width: 360px;
-      background-color: #f8f9fa;
-      border-radius: 10px;
-      padding: 18px;
-      margin-top: 10px;
-
-      h3 {
-        margin-bottom: 10px;
-      }
-
-      .suggestOptions button {
-        background-color: white;
-        padding: 7px 10px;
-        margin: 5px auto;
-        border: 1px solid grey;
-        border-radius: 15px;
-        font-size: 16px;
-        outline: none;
-        transition: background-color 0.15s ease;
-
-        &:hover {
-          cursor: pointer;
-          background-color: rgb(232, 233, 238);
-        }
-      }
-    }
 
     .faceContainer {
       position: relative;

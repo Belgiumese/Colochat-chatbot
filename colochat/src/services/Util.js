@@ -8,5 +8,15 @@ export default {
 
   getRandomNum(min, max) {
     return Math.random() * (max - min) + min;
+  },
+
+  getRandomInt(min, max) {
+    return Math.round(this.getRandomNum(min, max));
+  },
+
+  getRandArrayVal(arr) {
+    const i = this.getRandomInt(0, arr.length - 1);
+    console.log(`i: ${i}`);
+    return arr[i];
   }
 };
