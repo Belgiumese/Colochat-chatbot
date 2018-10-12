@@ -213,8 +213,7 @@ $arrowWidth: 40px;
 
   #typeBox {
     box-sizing: border-box;
-    background: #f8f9fa;
-    border-top: 2px solid grey;
+    border-top: 2px solid #958781;
     padding: 5px;
     display: flex;
     align-items: center;
@@ -223,6 +222,7 @@ $arrowWidth: 40px;
     input {
       padding: 12px 20px;
       border-radius: 4px;
+      margin-left: 35px;
       border: none;
       font-size: 1.1em;
       width: 80%;
@@ -232,16 +232,24 @@ $arrowWidth: 40px;
     button {
       font-size: 1.5em;
       padding: 10px;
+      margin: 0 auto;
       border-radius: 2em;
       background-color: $accent2;
       border: none;
       color: white;
+      transition: background-color 0.15s ease-out;
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgb(216, 47, 103);
+      }
 
       svg {
         display: block;
         margin: auto;
         width: 20px;
         height: 20px;
+        padding-left: 3px;
       }
     }
   }
