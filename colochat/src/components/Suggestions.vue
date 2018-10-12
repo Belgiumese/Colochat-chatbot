@@ -33,10 +33,19 @@ export default {
         'Can you give me a quiz in wakka-wakka?',
         'How are you?',
         'Who are you?',
-        'What is your name?',
+        'Can you tell me more about you?',
         'How do I say leg?',
         'Are we friends?',
-        'Give me a quiz!'
+        'Give me a quiz!',
+        'What can you do?',
+        'What words can you translate?',
+        'What is Colochat about?',
+        'What other information do you have on aboriginal language or culture?',
+        'How many aboriginal languages were there?',
+        'How many languages do you know?',
+        'What aboriginal languages do you know?',
+        'Can you translate something for me?',
+        'What aboriginal languages can you translate?'
       ],
 
       current: 0
