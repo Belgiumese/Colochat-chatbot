@@ -93,7 +93,7 @@
           </div>
 
           <div 
-            v-if="phase == PHASE.END" 
+            v-if="phase == PHASE.END || phase == PHASE.END_TUTORIAL" 
             class="end">
             <button 
               class="accentBtn"
@@ -220,10 +220,15 @@ $accent: hsl(340, 100%, 79%);
     flex-direction: column;
 
     .speechBubble {
+      $arrowWidth: 20px;
+      $arrowHeight: 20px;
+      $borderColor: #6fa2fe;
+      $fillColor: white;
+
       position: relative;
-      background: white;
+      background: $fillColor;
       border-radius: 0.4em;
-      border: 2px solid #6fa2fe;
+      border: 2px solid $borderColor;
       margin: 0 auto 15px auto;
       padding: 0.4em;
 
@@ -242,6 +247,36 @@ $accent: hsl(340, 100%, 79%);
             margin: 5px 0;
           }
         }
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        right: -$arrowWidth;
+        top: 100%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-left: $arrowWidth solid transparent;
+        border-right: $arrowWidth solid transparent;
+        border-top: $arrowHeight solid $borderColor;
+        transform: translateX(-50%);
+        z-index: 2;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        right: -$arrowWidth;
+        top: 100%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-left: $arrowWidth solid transparent;
+        border-right: $arrowWidth solid transparent;
+        border-top: $arrowHeight solid $fillColor;
+        transform: translate(-50%, -20%);
+        z-index: 3;
       }
     }
 
