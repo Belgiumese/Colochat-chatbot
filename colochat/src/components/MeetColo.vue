@@ -3,43 +3,41 @@
     <div class="meetColo">
       <div class="content">
       
-        <div
-          class="enterName1"
-          v-if="phase == PHASE.ENTER_NAME">
-          <p>Hi! I'm Colo, who are you?</p>
-        </div>
-
         <div 
-          class="greeting1"
-          v-if="phase == PHASE.GREETING">
-          <p>It's great to meet you {{ nameText }}! I'm Colo the koala chatbot, here to help you learn a bit about Aboriginal Languages from 
-          Queensland. Are you familiar with using ColoChat?</p>
-        </div>
+          class="speechBubble" 
+          v-if="showSpeechBubble">
 
-        <div 
-          class="welcome1"
-          v-if="phase == PHASE.WELCOME">
-          <p>Welcome to Colochat! Colochat is a fun and interactive way to learn about Aboriginal languages. Here you can chat with me, ask 
-          me to translate for you and ask me to quiz you.</p>
-        </div>
+          <p v-if="phase == PHASE.ENTER_NAME">Hi! I'm Colo 🐨, what's your name?</p>
 
-        <div 
-          class="features1"
-          v-if="phase == PHASE.FEATURES">
-          <p>At the moment, I know the translations for a bunch of different body parts from 18 Aboriginal languages!  Before we start chatting,
-          here are some examples of questions you can ask me:</p>
-          <ul>
-            <li>'How are you today, Colo?'</li>
-            <li>'What languages do you know Colo?'</li>
-            <li>'Can you translate the worm arm?'</li>
-            <li>'Colo, can you quiz me on body parts in Wakka-wakka?'</li>
-          </ul>
-        </div>
+          <p v-else-if="phase == PHASE.GREETING">It's great to meet you {{ nameText }}! 
+          I'm Colo the koala, here to help you learn a bit about Aboriginal Languages 
+          from Queensland. Have you used Colochat before?</p>
 
-        <div 
-          class="end1"
-          v-if="phase == PHASE.END">
-          <p>Lastly, when you’re chatting to me, don’t worry too much because you can just chat naturally to me. 😊  Okay, now let’s start!!</p>
+          <p v-else-if="phase == PHASE.WELCOME">Welcome to Colochat! Colochat is a fun and 
+          interactive way to learn about Aboriginal languages. Here you can chat with me,
+          ask me to translate for you and ask me to quiz you.</p>
+
+          <div 
+            class="features" 
+            v-else-if="phase == PHASE.FEATURES">
+            <p>At the moment, I know the translations for a bunch of different body parts 
+            from 18 Aboriginal languages! Here are some examples of questions you can ask 
+            me:</p>
+            <ul>
+              <li>'How are you today, Colo?'</li>
+              <li>'What languages do you know Colo?'</li>
+              <li>'Can you translate the word arm?'</li>
+              <li>'Colo, can you quiz me on body parts in Wakka-wakka?'</li>
+            </ul>
+          </div>
+
+          <p v-else-if="phase == PHASE.END_TUTORIAL">Lastly, when you’re chatting to me, don’t 
+          worry too much because you can just speak naturally to me. 😊 Okay, let's 
+          get started!</p>
+
+          <p v-else-if="phase == PHASE.END">That's great! 😊 Let's 
+          get started!</p>
+
         </div>
 
         <colo-face ref="coloFace"/>
@@ -91,7 +89,7 @@
             class="features">
             <button 
               class="accentBtn"
-              @click="toEnd">Next</button>
+              @click="toEndTutorial">Next</button>
           </div>
 
           <div 
@@ -131,11 +129,20 @@ export default {
         GREETING: 3,
         WELCOME: 4,
         FEATURES: 5,
-        END: 6
+        END: 6,
+        END_TUTORIAL: 7
       },
       phase: 0,
-      nameText: ''
+      nameText: '',
     };
+  },
+
+  computed: {
+    // Returns true if the current phase uses a speech bubble
+    showSpeechBubble() {
+      return (this.phase !== this.PHASE.SLEEPING 
+        && this.phase !== this.PHASE.WAKING_UP);
+    }
   },
 
   methods: {
@@ -153,18 +160,23 @@ export default {
       }
     },
 
-    toWelcome(){
+    toWelcome() {
       this.phase = this.PHASE.WELCOME;
       this.$refs.coloFace.setStandard();
     },
 
-    toFeatures(){
+    toFeatures() {
       this.phase = this.PHASE.FEATURES;
       this.$refs.coloFace.setHappy();
     },
 
-    toEnd(){
+    toEnd() {
       this.phase = this.PHASE.END;
+      this.$refs.coloFace.setStandard();
+    },
+
+    toEndTutorial() {
+      this.phase = this.PHASE.END_TUTORIAL;
       this.$refs.coloFace.setStandard();
     },
 
@@ -173,9 +185,9 @@ export default {
     }
   },
 
-  //mounted() {
-  // this.$refs.coloFace.setSleepy();
-  //}
+  mounted() {
+    this.$refs.coloFace.setSleepy();
+  }
 };
 </script>
 
@@ -207,55 +219,34 @@ $accent: hsl(340, 100%, 79%);
     align-items: center;
     flex-direction: column;
 
-    .enterName1 {
+    .speechBubble {
       position: relative;
       background: white;
       border-radius: 0.4em;
       border: 2px solid #6fa2fe;
-      margin: 0 auto;
+      margin: 0 auto 15px auto;
       padding: 0.4em;
-    }
 
-    .greeting1 {
-      position: relative;
-      background: white;
-      border-radius: 0.4em;
-      border: 2px solid #6fa2fe;
-      margin: 0 auto;
-      padding: 0.4em;
-    }
+      .features {
+        font-size: 20px;
 
-    .welcome1 {
-      position: relative;
-      background: white;
-      border-radius: 0.4em;
-      border: 2px solid #6fa2fe;
-      margin: 0 auto;
-      padding: 0.4em;
-    }
+        ul {
+          list-style-type: none;
 
-    .features1 {
-      position: relative;
-      background: white;
-      border-radius: 0.4em;
-      border: 2px solid #6fa2fe;
-      margin: 0 auto;
-      padding: 0.4em;
-      font-size: 20px;
-      list-style-position: inside;
-    }
-
-    .end1 {
-      position: relative;
-      background: white;
-      border-radius: 0.4em;
-      border: 2px solid #6fa2fe;
-      margin: 0 auto;
-      padding: 0.4em;
+          li {
+            padding: 3px 5px;
+            border-radius: 4px;
+            color: #dc1482;
+            background-color: #f1f1f1;
+            display: inline-block;
+            margin: 5px 0;
+          }
+        }
+      }
     }
 
     .inputArea {
-      margin-top: 30px;
+      margin-top: 10px;
 
       .nameInput {
         margin: 0 10px;

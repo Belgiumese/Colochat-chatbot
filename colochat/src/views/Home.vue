@@ -2,19 +2,24 @@
   <div class="home">
 
     <meet-colo 
-      v-if="showPopup" 
+      v-if="state === STATES.POPUP" 
       @exit="closePopup"/>
 
-    <chat-bot ref="chatBot"/>
-    <div class="coloSuggestions">
-      <div class="faceContainer hideOnMobile">
-        <div class="faceCircle"/>
-        <colo-face class="coloFace"/>
-      </div>
+    <div 
+      class="mainContent" 
+      v-show="state === STATES.CHAT">
 
-      <suggestions 
-        @clicked="suggestionClick" 
-        class="hideOnMobile"/>
+      <chat-bot ref="chatBot"/>
+      <div class="coloSuggestions">
+        <div class="faceContainer hideOnMobile">
+          <div class="faceCircle"/>
+          <colo-face class="coloFace"/>
+        </div>
+
+        <suggestions 
+          @clicked="suggestionClick" 
+          class="hideOnMobile"/>
+      </div>
     </div>
   </div>
 </template>
@@ -37,14 +42,20 @@ export default {
 
   data() {
     return {
+      STATES: {
+        LOADING: 0,
+        POPUP: 1,
+        CHAT: 2
+      },
+
       userName: null,
-      showPopup: false
+      state: 0
     };
   },
 
   methods: {
     closePopup() {
-      this.showPopup = false;
+      this.state = this.STATES.CHAT;
       this.$refs.chatBot.start();
     },
 
@@ -56,8 +67,9 @@ export default {
   mounted() {
     this.userName = localStorage.getItem('name');
     if (!this.userName) {
-      this.showPopup = true;
+      this.state = this.STATES.POPUP;
     } else {
+      this.state = this.STATES.CHAT;
       this.$refs.chatBot.start();
     }
   }
@@ -68,46 +80,49 @@ export default {
 $accent: hsl(340, 100%, 79%);
 
 .home {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: calc(100vh - 40px);
   background-image: url("../assets/bg.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 
-  .coloSuggestions {
+  .mainContent {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 
-    .faceContainer {
-      position: relative;
-      z-index: 1;
-      margin-left: 10px;
-      margin-bottom: 60px;
+    .coloSuggestions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
 
-      .faceCircle {
-        $size: 320px;
-
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -45%);
-        z-index: 0;
-        width: $size;
-        height: $size;
-        border-radius: 100%;
-        background-color: #6e4e45;
-      }
-
-      .coloFace {
+      .faceContainer {
         position: relative;
-        z-index: 2;
-        width: 330px !important;
-        height: 250px !important;
+        z-index: 1;
+        margin-left: 10px;
+        margin-bottom: 60px;
+
+        .faceCircle {
+          $size: 320px;
+
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -45%);
+          z-index: 0;
+          width: $size;
+          height: $size;
+          border-radius: 100%;
+          background-color: #6e4e45;
+        }
+
+        .coloFace {
+          position: relative;
+          z-index: 2;
+          width: 330px !important;
+          height: 250px !important;
+        }
       }
     }
   }

@@ -23,7 +23,7 @@ export default {
       imgName: ColoHappy
     };
   },
-
+  
   // Methods on the object
   methods: {
     setHappy() {
