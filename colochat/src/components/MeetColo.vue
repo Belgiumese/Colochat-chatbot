@@ -25,9 +25,9 @@
             me:</p>
             <ul>
               <li>'How are you today, Colo?'</li>
-              <li>'What languages do you know Colo?'</li>
+              <li>'What languages do you know?'</li>
               <li>'Can you translate the word arm?'</li>
-              <li>'Colo, can you quiz me on body parts in Wakka-wakka?'</li>
+              <li class="hideOnMobile">'Colo, can you quiz me on body parts in Wakka-wakka?'</li>
             </ul>
           </div>
 
@@ -210,6 +210,12 @@ $accent: hsl(340, 100%, 79%);
   background-image: url("../assets/intro_bg.jpg");
   background-position: center;
   background-size: cover;
+
+  @media only screen and (max-width: 1000px) {
+    .hideOnMobile {
+      display: none !important;
+    }
+  }
 
   .content {
     width: 90%;
