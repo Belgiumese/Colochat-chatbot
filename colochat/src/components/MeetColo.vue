@@ -25,9 +25,9 @@
             me:</p>
             <ul>
               <li>'How are you today, Colo?'</li>
-              <li>'What languages do you know Colo?'</li>
+              <li>'What languages do you know?'</li>
               <li>'Can you translate the word arm?'</li>
-              <li>'Colo, can you quiz me on body parts in Wakka-wakka?'</li>
+              <li class = "hideMobile">'Colo, can you quiz me on body parts in Wakka-wakka?'</li>
             </ul>
           </div>
 
@@ -211,6 +211,12 @@ $accent: hsl(340, 100%, 79%);
   background-position: center;
   background-size: cover;
 
+  @media only screen and (max-width: 1000px) {
+    .hideMobile {
+      display: none;
+    }
+  }
+
   .content {
     width: 90%;
     max-width: 600px;
@@ -245,6 +251,11 @@ $accent: hsl(340, 100%, 79%);
             background-color: #f1f1f1;
             display: inline-block;
             margin: 5px 0;
+          }
+
+@media only screen and (max-width: 1000px) {
+          li {
+            padding: 3px 5px;
           }
         }
       }
