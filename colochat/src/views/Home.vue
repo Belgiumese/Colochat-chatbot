@@ -29,6 +29,7 @@ import ChatBot from '../components/ChatBot.vue';
 import ColoFace from '../components/ColoFace.vue';
 import MeetColo from '../components/MeetColo.vue';
 import Suggestions from '../components/Suggestions.vue';
+import Animation from '../components/Animation.vue';
 
 export default {
   name: 'Home',
@@ -37,7 +38,8 @@ export default {
     'chat-bot': ChatBot,
     'colo-face': ColoFace,
     'meet-colo': MeetColo,
-    'suggestions': Suggestions
+    'suggestions': Suggestions,
+    'animation': Animation
   },
 
   data() {
@@ -49,7 +51,8 @@ export default {
       },
 
       userName: null,
-      state: 0
+      state: 0,
+      iframeLink: './sleeping/sleeping.html'
     };
   },
 
