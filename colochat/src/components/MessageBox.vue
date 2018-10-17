@@ -105,7 +105,7 @@ export default {
 
 @media only screen and (max-width: 1000px) {
   .messageBox {
-    height: calc((100vh - 40px) * 0.7);
+    flex: 1;
   }
 }
 

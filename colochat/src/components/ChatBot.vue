@@ -258,16 +258,21 @@ $arrowWidth: 40px;
 @media only screen and (max-width: 1000px) {
   .chatBot {
     height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
 
     &::after {
       display: none;
     }
-  }
 
-  #typebox {
-    max-height: calc((100vh - 40px) * 0.1);
-    position: sticky !important;
-    bottom: 0;
+    .messageBox {
+      flex: 1;
+    }
+
+    #typebox {
+      position: sticky !important;
+      bottom: 0;
+    }
   }
 }
 
