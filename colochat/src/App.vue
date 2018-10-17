@@ -66,6 +66,8 @@
   align-items: center;
   justify-content: center;
   color: #958781;
+  border-bottom: 2px solid #be9689;
+  box-sizing: border-box;
 
   a {
     padding: 0 20px;
@@ -83,12 +85,14 @@
 @media only screen and (max-width: 1000px) {
   #nav {
     a {
-      font-size: 1em;
+      font-size: 0.9em;
     }
   }
 
-  p {
-    font-size: 1em !important;
+  p,
+  li,
+  a {
+    font-size: 0.9em !important;
   }
 }
 </style>
