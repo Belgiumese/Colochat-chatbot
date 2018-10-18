@@ -175,6 +175,7 @@ $accent: hsl(340, 100%, 79%);
 
       .info-btn {
         display: inline-block;
+        position: relative;
         border: 2px solid $accent;
         padding: 7px 15px;
         border-radius: 4px;
@@ -183,6 +184,8 @@ $accent: hsl(340, 100%, 79%);
         font-weight: bold;
         text-decoration: none;
         transition: all 0.5s ease;
+        transform: translateX(-50%);
+        left: 50%;
 
         &:hover {
           background-color: $accent;
