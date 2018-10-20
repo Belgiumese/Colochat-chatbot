@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@tweenjs/tween.js": "^17.2.0",
+    "createjs": "^1.0.1",
+    "createjs-module": "^0.8.3",
     "firebase": "^5.4.1",
     "perfect-scrollbar": "^1.4.0",
     "vue": "^2.5.17",

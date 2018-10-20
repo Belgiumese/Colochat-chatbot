@@ -1,7 +1,4 @@
-import * as createjs from 'createjs-module';
-var an = {};
-
-(function (cjs) {
+(function (cjs, an) {
 
   var p; // shortcut to reference prototypes
   var lib = {}; var ss = {}; var img = {};
@@ -132,7 +129,7 @@ var an = {};
     color: '#424242',
     opacity: 0.00,
     manifest: [
-      { src: './sleeping/images/_7EC595ADFE504C5AAC95FD2B2DBC4367.png?1539758433577', id: '_7EC595ADFE504C5AAC95FD2B2DBC4367' }
+      { src: './images/_7EC595ADFE504C5AAC95FD2B2DBC4367.png?1539758433577', id: '_7EC595ADFE504C5AAC95FD2B2DBC4367' }
     ],
     preloads: []
   };
@@ -148,13 +145,13 @@ var an = {};
   p.setAutoPlay = function (autoPlay) {
     this.tickEnabled = autoPlay;
   };
-  p.play = function () { this.tickEnabled = true; this.getChildAt(0).gotoAndPlay(this.getTimelinePosition()); };
+  p.play = function () { this.tickEnabled = true; console.log('playing'); this.getChildAt(0).gotoAndPlay(this.getTimelinePosition()); };
   p.stop = function (ms) { if (ms) this.seek(ms); this.tickEnabled = false; };
   p.seek = function (ms) { this.tickEnabled = true; this.getChildAt(0).gotoAndStop(lib.properties.fps * ms / 1000); };
   p.getDuration = function () { return this.getChildAt(0).totalFrames / lib.properties.fps * 1000; };
 
   p.getTimelinePosition = function () { return this.getChildAt(0).currentFrame / lib.properties.fps * 1000; };
-
+  p.ticksEnabled = true;
   an.bootcompsLoaded = an.bootcompsLoaded || [];
   if (!an.bootstrapListeners) {
     an.bootstrapListeners = [];
@@ -190,6 +187,5 @@ var an = {};
 
 
 
-})(createjs || {});
-
-export default an;
+})(createjs = createjs || {}, AdobeAn = AdobeAn || {});
+var createjs, AdobeAn;

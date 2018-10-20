@@ -1,11 +1,9 @@
 <template>
   <div class="coloFace">
     <animation 
-      v-if="animating" 
       :src="iframeLink"/>
 
     <div 
-      v-else
       class="coloImage" 
       :style="{ 'background-image': `url(${imgName})` }"/>
   </div>
@@ -13,16 +11,18 @@
 
 <script>
 import Util from '../services/Util';
-import Animation from './Animation';
+import NewAnimation from './NewAnimation';
 import ColoHappy from '../assets/colo_faces/colo_happy.js';
 import ColoSleepy from '../assets/colo_faces/colo_sleepy.js';
 import ColoStandard from '../assets/colo_faces/colo_standard.js';
+
+import * as createjs from 'createjs-module';
 
 export default {
   name: 'ColoFace',
 
   components: {
-    'animation': Animation
+    'animation': NewAnimation
   },
   
   // Contains any variables on the object
@@ -67,21 +67,22 @@ export default {
       this.iframeLink = './starting/index.html';
       this.animating = true;
 
-      await Util.delay(5000);
+      await Util.delay(50000000);
 
       this.animating = false;
     }
+  },
 
-    // animate(animation) {
-
-    // switch(animation) {
-    //   case this.ANIM.SLEEP:
-    //     break;
-    //   case this.ANIM.WAKE:
-    //     break;
-    // }
-    // }
-  }
+  // mounted() {
+  //   var queue = new createjs.LoadQueue();
+  //   queue.on('complete', () => {
+  //     console.log('HELLO THERE');
+  //   }, this);
+  //   queue.on('error', () => {
+  //     console.log('HELLO THERE');
+  //   }, this);
+  //   queue.loadFile({id:'sound', src:'http://path/to/sound.mp3'});
+  // }
 };
 </script>
 

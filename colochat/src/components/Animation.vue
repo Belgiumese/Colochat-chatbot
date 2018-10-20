@@ -22,9 +22,6 @@ export default {
 
 <style lang="scss" scoped>
 .animation {
-  width: 600px;
-  height: 480px;
-
   iframe {
     overflow: hidden;
   }
