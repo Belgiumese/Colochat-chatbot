@@ -1,10 +1,8 @@
 <template>
   <div class="coloFace">
-    <!-- <img 
-      ref="image"
-      :src="imgName" 
-      alt="Colo mascot"> -->
-    <!-- <svgicon :name="imgName"/> -->
+    <!-- <animation 
+      :src="iframeLink"/> -->
+
     <div 
       class="coloImage" 
       :style="{ 'background-image': `url(${imgName})` }"/>
@@ -12,18 +10,34 @@
 </template>
 
 <script>
+import Util from '../services/Util';
+// import NewAnimation from './NewAnimation';
 import ColoHappy from '../assets/colo_faces/colo_happy.js';
 import ColoSleepy from '../assets/colo_faces/colo_sleepy.js';
 import ColoStandard from '../assets/colo_faces/colo_standard.js';
 
+import * as createjs from 'createjs-module';
+
 export default {
+  name: 'ColoFace',
+
+  components: {
+    // 'animation': NewAnimation
+  },
+  
   // Contains any variables on the object
   data() {
     return {
-      imgName: ColoHappy
+      imgName: ColoHappy,
+      // ANIM: {
+      //   SLEEP: 0,
+      //   WAKE: 1
+      // },
+      // animating: false,
+      iframeLink: ''
     };
   },
-  
+
   // Methods on the object
   methods: {
     setHappy() {
@@ -42,8 +56,22 @@ export default {
       if (imgUrl) {
         this.imgName = imgUrl;
       }
+    },
+
+    animateSleep() {
+      this.iframeLink = './sleeping/sleeping.html';
+      // this.animating = true;
+    },
+
+    async animateWakeUp() {
+      this.iframeLink = './starting/index.html';
+      this.animating = true;
+
+      await Util.delay(50000000);
+
+      // this.animating = false;
     }
-  }
+  },
 };
 </script>
 
@@ -71,8 +99,5 @@ $width: 240px;
     height: 240px;
   }
 }
-</style>
-
-<style>
 </style>
 

@@ -18,5 +18,9 @@ export default {
     const i = this.getRandomInt(0, arr.length - 1);
     console.log(`i: ${i}`);
     return arr[i];
+  },
+
+  delay(ms) {
+    return new Promise((res) => setTimeout(res, ms));
   }
 };

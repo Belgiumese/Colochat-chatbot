@@ -20,6 +20,11 @@
           @clicked="suggestionClick" 
           class="hideOnMobile"/>
       </div>
+
+      <reset-btn 
+        v-if="this.userName"
+        @click="resetUser" 
+        class="reset"/>
     </div>
   </div>
 </template>
@@ -29,6 +34,8 @@ import ChatBot from '../components/ChatBot.vue';
 import ColoFace from '../components/ColoFace.vue';
 import MeetColo from '../components/MeetColo.vue';
 import Suggestions from '../components/Suggestions.vue';
+import Animation from '../components/Animation.vue';
+import ResetBtn from '../components/ResetBtn.vue';
 
 export default {
   name: 'Home',
@@ -37,7 +44,9 @@ export default {
     'chat-bot': ChatBot,
     'colo-face': ColoFace,
     'meet-colo': MeetColo,
-    'suggestions': Suggestions
+    'suggestions': Suggestions,
+    'animation': Animation,
+    'reset-btn': ResetBtn
   },
 
   data() {
@@ -49,7 +58,8 @@ export default {
       },
 
       userName: null,
-      state: 0
+      state: 0,
+      iframeLink: './sleeping/sleeping.html'
     };
   },
 
@@ -61,6 +71,11 @@ export default {
 
     suggestionClick(text) {
       this.$refs.chatBot.submitMessage(text);
+    },
+
+    resetUser() {
+      localStorage.removeItem('name');
+      window.location.reload();
     }
   },
 
@@ -124,6 +139,12 @@ $accent: hsl(340, 100%, 79%);
           height: 250px !important;
         }
       }
+    }
+
+    .reset {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
     }
   }
 
