@@ -10,13 +10,13 @@
 </template>
 
 <script>
-import Util from '../services/Util';
+// import Util from '../services/Util';
 // import NewAnimation from './NewAnimation';
 import ColoHappy from '../assets/colo_faces/colo_happy.js';
 import ColoSleepy from '../assets/colo_faces/colo_sleepy.js';
 import ColoStandard from '../assets/colo_faces/colo_standard.js';
 
-import * as createjs from 'createjs-module';
+// import * as createjs from 'createjs-module';
 
 export default {
   name: 'ColoFace',
@@ -34,7 +34,7 @@ export default {
       //   WAKE: 1
       // },
       // animating: false,
-      iframeLink: ''
+      // iframeLink: ''
     };
   },
 
@@ -58,19 +58,19 @@ export default {
       }
     },
 
-    animateSleep() {
-      this.iframeLink = './sleeping/sleeping.html';
-      // this.animating = true;
-    },
+    // animateSleep() {
+    //   this.iframeLink = './sleeping/sleeping.html';
+    //   // this.animating = true;
+    // },
 
-    async animateWakeUp() {
-      this.iframeLink = './starting/index.html';
-      this.animating = true;
+    // async animateWakeUp() {
+    //   this.iframeLink = './starting/index.html';
+    //   this.animating = true;
 
-      await Util.delay(50000000);
+    //   await Util.delay(50000000);
 
-      // this.animating = false;
-    }
+    //   // this.animating = false;
+    // }
   },
 };
 </script>

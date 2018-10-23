@@ -146,11 +146,10 @@ export default {
   },
 
   methods: {
-    async wakeUpClick() {
-      // TODO: Add colo wakeup animation
-      await this.$refs.coloFace.animateWakeUp();
+    wakeUpClick() {
+      // await this.$refs.coloFace.animateWakeUp();
       this.phase = this.PHASE.ENTER_NAME;
-      // this.$refs.coloFace.setStandard();
+      this.$refs.coloFace.setStandard();
     },
 
     enterName() {

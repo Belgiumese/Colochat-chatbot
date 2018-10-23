@@ -25,6 +25,11 @@ const router = new Router({
       path: '/info',
       name: 'furtherInfo',
       component: () => import('./views/FurtherInfo.vue')
+    },
+    {
+      path: '/languages',
+      name: 'languages',
+      component: () => import('./views/Languages.vue')
     }
   ]
 });
