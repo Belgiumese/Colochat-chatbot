@@ -1,7 +1,7 @@
 <template>
   <div class="coloFace">
-    <animation 
-      :src="iframeLink"/>
+    <!-- <animation 
+      :src="iframeLink"/> -->
 
     <div 
       class="coloImage" 
@@ -11,7 +11,7 @@
 
 <script>
 import Util from '../services/Util';
-import NewAnimation from './NewAnimation';
+// import NewAnimation from './NewAnimation';
 import ColoHappy from '../assets/colo_faces/colo_happy.js';
 import ColoSleepy from '../assets/colo_faces/colo_sleepy.js';
 import ColoStandard from '../assets/colo_faces/colo_standard.js';
@@ -22,18 +22,18 @@ export default {
   name: 'ColoFace',
 
   components: {
-    'animation': NewAnimation
+    // 'animation': NewAnimation
   },
   
   // Contains any variables on the object
   data() {
     return {
       imgName: ColoHappy,
-      ANIM: {
-        SLEEP: 0,
-        WAKE: 1
-      },
-      animating: false,
+      // ANIM: {
+      //   SLEEP: 0,
+      //   WAKE: 1
+      // },
+      // animating: false,
       iframeLink: ''
     };
   },
@@ -60,7 +60,7 @@ export default {
 
     animateSleep() {
       this.iframeLink = './sleeping/sleeping.html';
-      this.animating = true;
+      // this.animating = true;
     },
 
     async animateWakeUp() {
@@ -69,20 +69,9 @@ export default {
 
       await Util.delay(50000000);
 
-      this.animating = false;
+      // this.animating = false;
     }
   },
-
-  // mounted() {
-  //   var queue = new createjs.LoadQueue();
-  //   queue.on('complete', () => {
-  //     console.log('HELLO THERE');
-  //   }, this);
-  //   queue.on('error', () => {
-  //     console.log('HELLO THERE');
-  //   }, this);
-  //   queue.loadFile({id:'sound', src:'http://path/to/sound.mp3'});
-  // }
 };
 </script>
 
