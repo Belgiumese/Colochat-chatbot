@@ -4,10 +4,10 @@
       This is the nav bar with links to conponents. These pages are specified
       in the router.js file. -->
     <div id="nav">
-      <router-link to="/">CHAT</router-link> |
-      <router-link to="/faq">HELP</router-link> |
-      <router-link to="/info">RESOURCES</router-link> |
-      <router-link to="/languages">LANGUAGES</router-link>
+      <router-link to="/">CHAT</router-link>|
+      <router-link to="/faq">HELP</router-link>|
+      <router-link to="/languages">LANGUAGES</router-link>|
+      <router-link to="/info">RESOURCES</router-link>
     </div>
 
     <!-- The router view shows the entire page you're currently on -->
@@ -87,6 +87,7 @@
   #nav {
     a {
       font-size: 0.9em;
+      padding: 0 10px;
     }
   }
 
