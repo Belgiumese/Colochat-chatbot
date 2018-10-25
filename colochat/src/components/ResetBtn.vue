@@ -7,7 +7,7 @@
 <style lang="scss" scoped>
 .resetBtn {
   button {
-    $accent: hsl(340, 100%, 79%);
+    $accent: #958796;
 
     display: inline-block;
     color: $accent;
@@ -17,6 +17,7 @@
     background: white;
     padding: 8px 20px;
     border: 3px solid $accent;
+    border-radius: 4px;
 
     &:hover {
       background-color: $accent;
