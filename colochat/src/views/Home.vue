@@ -95,12 +95,13 @@ export default {
 $accent: hsl(340, 100%, 79%);
 
 .home {
-  min-height: calc(100vh - 40px);
+  max-height: calc(100vh - 40px);
   background-image: url("../assets/bg.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  display: flex;
+  display: inline-flex;
+  flex: 1;
   justify-content: center;
   align-items: stretch;
 
