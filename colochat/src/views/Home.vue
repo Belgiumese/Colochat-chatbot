@@ -100,11 +100,15 @@ $accent: hsl(340, 100%, 79%);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
 
   .mainContent {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex: 1;
 
     .coloSuggestions {
       display: flex;
