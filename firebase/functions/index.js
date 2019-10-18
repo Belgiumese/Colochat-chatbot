@@ -6,7 +6,7 @@ const { WebhookClient, Suggestion } = require('dialogflow-fulfillment');
 const axios = require('axios');
 
 const slqRequest = axios.create({
-  timeout: 4000
+  timeout: 60000
 });
 
 const ID_SIZE = 10;
