@@ -184,7 +184,7 @@ function uniqueId() {
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
   // Fix for dialogflow smalltalk, which does not have an intent property and crashes the
   // dialogflow-fulfillment handleRequest function. Pretend to be an intent called 'none'.
-  if (!request.body.queryResult.intent) {
+  if (!request.body.queryResult.intent || !request.body.queryResult.intent.displayName) {
     request.body.queryResult.intent = { displayName: 'none', isFallback: true };
   }
 

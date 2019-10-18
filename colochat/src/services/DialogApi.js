@@ -16,7 +16,7 @@ const config = {
 firebase.initializeApp(config);
 
 let dialogSessionId = null;
-// const RES_TIMEOUT = 15000;
+const RES_TIMEOUT = 30000;
 
 // Initialise dialogflow functions
 // make an intent request to dialogflow
@@ -42,13 +42,15 @@ function formatMessageData(messageData) {
   });
 
   for (let i = 0; i < messages.length; i++) {
-    messageDataSet.push(MessageData({
-      id: messageData.responseId + i,
-      action: messageData.queryResult.action,
-      text: messages[i],
-      source: SOURCE.SOURCE_AGENT,
-      options: (i === (messages.length - 1)) ? responseOptions : null,
-    }));
+    if (messages[i] !== '') {
+      messageDataSet.push(MessageData({
+        id: messageData.responseId + i,
+        action: messageData.queryResult.action,
+        text: messages[i],
+        source: SOURCE.SOURCE_AGENT,
+        options: (i === (messages.length - 1)) ? responseOptions : null,
+      }));
+    }
   }
 
   return messageDataSet;
@@ -68,18 +70,23 @@ function errorResponse(err) {
 export default {
   getResponse(text) {
     // Set a timeout for if the message doesn't arrive
-    //const timeout = setTimeout(() => errorResponse('Timeout'), RES_TIMEOUT);
+    const timeout = setTimeout(() => errorResponse('Timeout'), RES_TIMEOUT);
 
     return dialogFlowRequest({ text: text, sessionPath: dialogSessionId })
       .then(res => {
-        //clearTimeout(timeout);
+        clearTimeout(timeout);
 
         if (!dialogSessionId) {
           dialogSessionId = res.data.sessionPath;
         }
-        return formatMessageData(res.data.message);
+
+        const formattedMessages = formatMessageData(res.data.message);
+        if (!formattedMessages.length) {
+          return errorResponse('Empty Message');
+        }
+        return formattedMessages;
       }).catch(err => {
-        //clearTimeout(timeout);
+        clearTimeout(timeout);
         return errorResponse(err);
       });
   }
